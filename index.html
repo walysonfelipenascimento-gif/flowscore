@@ -52,6 +52,7 @@
         <h1>FlowScore</h1>
         <p class="subtitle">O novo império das comunidades. O acesso é exclusivo para quem segue @onlyz.licinhosz_bb no Instagram!</p>
 
+        <!-- Link exato para o teu Instagram e que ativa o check automaticamente -->
         <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" class="insta-banner" onclick="marcouInstagram()">
             📸 1º PASSO: Clica aqui e segue @onlyz.licinhosz_bb para liberar o acesso!
         </a>
@@ -86,18 +87,7 @@
     </div>
 
     <script>
-        // REDIRECIONA AUTOMATICAMENTE SE JÁ TIVER FEITO LOGIN ANTES
-        window.onload = function() {
-            let emailSalvo = localStorage.getItem('flowscore_email');
-            if (emailSalvo) {
-                if (emailSalvo === 'walysonfelipenascimento@gmail.com') {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'comum.html';
-                }
-            }
-        };
-
+        // Função para marcar automaticamente os dois checks de Instagram ao clicar no banner
         function marcouInstagram() {
             document.getElementById('check-insta-login').checked = true;
             document.getElementById('check-insta-registo').checked = true;
@@ -113,6 +103,7 @@
                 return;
             }
 
+            // Se for o teu e-mail de fundador, vai direto para o painel de admin
             if (email === 'walysonfelipenascimento@gmail.com') {
                 localStorage.setItem('flowscore_email', email);
                 window.location.href = 'admin.html';
