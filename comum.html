@@ -27,6 +27,15 @@
         .status-box span { font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 4px; }
         .status-box strong { font-size: 1rem; color: #ff2a8d; }
 
+        /* Botões para alternar as listas de membros */
+        .members-nav { display: flex; gap: 8px; margin-top: 10px; }
+        .btn-tab { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 42, 141, 0.3); color: #fff; padding: 8px; border-radius: 10px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
+        .btn-tab.active { background: rgba(255, 42, 141, 0.2); border-color: #ff2a8d; font-weight: bold; }
+
+        .members-list-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.2); border-radius: 14px; padding: 12px; margin-top: 10px; text-align: left; max-height: 150px; overflow-y: auto; display: none; }
+        .member-item { font-size: 0.78rem; color: #ddd; padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+        .member-item span.vip-badge { color: #f1c40f; font-weight: bold; }
+
         /* Caixa de publicação fiel ao design original + suporte a texto longo */
         .publish-box { background: #16102a; border: 1px solid #ff2a8d; border-radius: 16px; padding: 18px; max-width: 500px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left; }
         .publish-box h3 { font-size: 1rem; color: #ff2a8d; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
@@ -34,7 +43,7 @@
         textarea.input-field { resize: vertical; min-height: 80px; }
         .btn-publicar { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
 
-        /* Cartões de posts no estilo exato da imagem */
+        /* Cartões de posts */
         .post-card { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.4); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); max-width: 500px; width: 100%; text-align: left; }
         .post-header { display: flex; align-items: center; padding: 14px 16px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .post-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(45deg, #ff2a8d, #f1c40f); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.95rem; color: #fff; }
@@ -77,6 +86,20 @@
                 <strong id="user-status-text">👑 Fundador</strong>
             </div>
         </div>
+
+        <!-- Botões de Listagem de Membros -->
+        <div class="members-nav">
+            <button class="btn-tab" onclick="alternarLista('geral')">👥 Membros Gerais</button>
+            <button class="btn-tab" onclick="alternarLista('planos')">⭐ Membros em Planos</button>
+        </div>
+
+        <div class="members-list-box" id="box-lista-geral">
+            <div id="conteudo-lista-geral">A carregar membros...</div>
+        </div>
+
+        <div class="members-list-box" id="box-lista-planos">
+            <div id="conteudo-lista-planos">A carregar membros VIP...</div>
+        </div>
     </div>
 
     <!-- Caixa de publicação idêntica à foto de referência -->
@@ -103,8 +126,86 @@
                 document.getElementById('nav-admin-link').style.display = 'inline-block';
             }
 
+            // Registar utilizador atual na lista de membros se não existir
+            registarMembroAtual(email, isAdmin);
+
             carregarPostsComum();
+            carregarListasMembros();
         };
+
+        function registarMembroAtual(email, isAdmin) {
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            let status = isAdmin ? 'Fundador / Admin' : (localStorage.getItem('flowscore_vip_ativo') === 'true' ? 'Membro VIP' : 'Membro Comum');
+            let isVip = (isAdmin || localStorage.getItem('flowscore_vip_ativo') === 'true');
+
+            let existente = membros.find(m => m.email === email);
+            if (!existente) {
+                membros.push({ email: email, status: status, vip: isVip });
+            } else {
+                existente.status = status;
+                existente.vip = isVip;
+            }
+            localStorage.setItem('flowscore_membros', JSON.stringify(membros));
+        }
+
+        function alternarLista(tipo) {
+            let boxGeral = document.getElementById('box-lista-geral');
+            let boxPlanos = document.getElementById('box-lista-planos');
+
+            if (tipo === 'geral') {
+                if (boxGeral.style.display === 'block') {
+                    boxGeral.style.display = 'none';
+                } else {
+                    boxGeral.style.display = 'block';
+                    boxPlanos.style.display = 'none';
+                }
+            } else {
+                if (boxPlanos.style.display === 'block') {
+                    boxPlanos.style.display = 'none';
+                } else {
+                    boxPlanos.style.display = 'block';
+                    boxGeral.style.display = 'none';
+                }
+            }
+        }
+
+        function carregarListasMembros() {
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [
+                { email: 'walysonfelipenascimento@gmail.com', status: 'Fundador / Admin', vip: true }
+            ];
+
+            const divGeral = document.getElementById('conteudo-lista-geral');
+            const divPlanos = document.getElementById('conteudo-lista-planos');
+
+            divGeral.innerHTML = '';
+            divPlanos.innerHTML = '';
+
+            if (membros.length === 0) {
+                divGeral.innerHTML = '<div class="member-item">Nenhum membro registado.</div>';
+            }
+
+            let membrosVipCount = 0;
+            membros.forEach(m => {
+                divGeral.innerHTML += `
+                    <div class="member-item">
+                        <span>${m.email}</span>
+                        <span style="color:#ff2a8d;">${m.status}</span>
+                    </div>`;
+
+                if (m.vip) {
+                    membrosVipCount++;
+                    divPlanos.innerHTML += `
+                        <div class="member-item">
+                            <span>${m.email}</span>
+                            <span class="vip-badge">⭐ Ativo (VIP/Realeza)</span>
+                        </div>`;
+                }
+            });
+
+            if (membrosVipCount === 0) {
+                divPlanos.innerHTML = '<div class="member-item">Nenhum membro com plano ativo.</div>';
+            }
+        }
 
         function publicarComum() {
             let link = document.getElementById('comum-link').value.trim();
