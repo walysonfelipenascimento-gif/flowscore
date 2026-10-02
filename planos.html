@@ -8,209 +8,104 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .header-nav { width: 100%; max-width: 550px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
         .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .header-nav a.active { border-color: #2ecc71; background: rgba(46, 204, 113, 0.15); font-weight: bold; }
+        .header-nav a.active { border-color: #f39c12; background: rgba(243, 156, 18, 0.15); font-weight: bold; }
 
         .card-container {
-            background: linear-gradient(135deg, #19152e 0%, #141126 100%);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            border-radius: 20px; padding: 25px 20px; max-width: 550px; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(46, 204, 113, 0.1);
-            margin-bottom: 25px;
+            background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(243, 156, 18, 0.15);
+            margin-bottom: 20px; text-align: center;
         }
+        h2 { font-size: 1.5rem; margin-bottom: 8px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
+
+        .coins-display { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 10px; }
         
-        h2 { font-size: 1.5rem; margin-bottom: 12px; background: linear-gradient(45deg, #2ecc71, #1abc9c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
-        .article-opinion { font-size: 0.85rem; color: #ccc; line-height: 1.5; margin-bottom: 20px; text-align: justify; background: rgba(255, 255, 255, 0.02); border-left: 3px solid #2ecc71; padding: 12px 15px; border-radius: 0 8px 8px 0; }
+        .plan-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 16px; padding: 16px; margin-bottom: 15px; text-align: left; }
+        .plan-box h3 { font-size: 1rem; color: #f39c12; margin-bottom: 6px; }
+        .plan-box p { font-size: 0.78rem; color: #ccc; margin-bottom: 12px; }
 
-        .coin-box { background: rgba(46, 204, 113, 0.05); border: 1px solid rgba(46, 204, 113, 0.2); border-radius: 15px; padding: 15px; text-align: center; margin-bottom: 15px; }
-        .coin-value { font-size: 1.8rem; font-weight: bold; color: #2ecc71; margin-bottom: 10px; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-action:hover { opacity: 0.9; }
 
-        .streak-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 15px; max-height: 180px; overflow-y: auto; padding: 5px; }
-        .streak-day { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px 4px; text-align: center; font-size: 0.7rem; color: #aaa; }
-        .streak-day.completed { background: rgba(46, 204, 113, 0.2); border-color: #2ecc71; color: #2ecc71; font-weight: bold; }
-        .streak-day.current { border-color: #f39c12; color: #f39c12; font-weight: bold; }
-
-        .btn-action { width: 100%; background: linear-gradient(45deg, #2ecc71, #1abc9c); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; text-align: center; margin-top: 10px; }
-        .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
-        .btn-action:disabled { background: #555; cursor: not-allowed; }
-
-        .plan-list-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .plan-info h4 { font-size: 0.9rem; color: #f39c12; margin-bottom: 3px; }
-        .plan-info p { font-size: 0.75rem; color: #aaa; }
-        .plan-price { font-size: 0.85rem; font-weight: bold; color: #2ecc71; background: rgba(46,204,113,0.1); padding: 5px 10px; border-radius: 6px; }
-
-        .pix-box { background: rgba(0, 0, 0, 0.3); border: 1px dashed rgba(243, 156, 18, 0.5); padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.8rem; color: #ddd; word-break: break-all; text-align: center; }
-        
-        .qrcode-container { margin: 15px auto; background: #fff; padding: 10px; border-radius: 10px; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; }
-        .qrcode-container img { width: 130px; height: 130px; }
-
-        .support-info { font-size: 0.78rem; color: #aaa; margin-top: 12px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
-        .support-info a { color: #f39c12; text-decoration: none; }
+        /* Painel exclusivo do Admin - Totalmente isolado */
+        .admin-panel { background: #1b1230; border: 2px dashed #9b59b6; border-radius: 20px; padding: 20px; max-width: 500px; width: 100%; margin-bottom: 20px; display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        .admin-panel h3 { color: #e056fd; font-size: 1.1rem; margin-bottom: 8px; }
+        .admin-panel p { font-size: 0.78rem; color: #d1b3ff; margin-bottom: 12px; }
     </style>
 </head>
 <body>
 
     <div class="header-nav">
         <a href="comum.html">Feed Fila</a>
-        <a href="vip.html">Área VIP</a>
-        <a href="exclusivo.html">Exclusivo</a>
+        <a href="vip.html">Área VIP ⭐</a>
+        <a href="exclusivo.html">Exclusivo 👑</a>
         <a href="planos.html" class="active">Planos & Moedas 🪙</a>
     </div>
 
-    <!-- SECÇÃO 1: MOEDAS & CHECK-INS (30 DIAS) -->
-    <div class="card-container">
-        <h2>Secção I: Check-ins & Ciclo de 30 Dias</h2>
-        
-        <div class="article-opinion">
-            "A consistência é o pilar fundamental do crescimento digital. Nosso sistema de check-in mensal monitora rigorosamente sua atividade em um ciclo de 30 dias. Atenção: a regra é estrita. Caso falhe um único dia sem realizar o check-in, a sequência de progresso é quebrada e reiniciada automaticamente do Dia 1."
-        </div>
-
-        <div class="coin-box">
-            <h3>Seu Saldo Atual</h3>
-            <div class="coin-value" id="balance-display">🪙 15</div>
-            
-            <button class="btn-action" id="btn-checkin" onclick="fazerCheckin()">📅 Registar Check-in de Hoje</button>
-            <p style="font-size: 0.75rem; color: #aaa; margin-top: 6px;" id="streak-text">Sequência atual: Dia 1 / 30</p>
-        </div>
-
-        <h4 style="font-size: 0.85rem; color: #fff; margin-top: 15px; margin-bottom: 5px;">Progresso do Ciclo Mensal (30 Dias)</h4>
-        <div class="streak-grid" id="streakGrid"></div>
+    <!-- Painel de Controlo do Administrador (Fica oculto por predefinição e aparece isolado se for o admin) -->
+    <div class="admin-panel" id="admin-master-panel">
+        <h3>👑 Painel Master do Administrador</h3>
+        <p>Logado como Fundador. Você possui privilégios totais de moderação e publicação em todas as páginas.</p>
+        <button class="btn-action" onclick="resetarDadosGerais()" style="background: linear-gradient(45deg, #c0392b, #e74c3c);">Limpar / Resetar Todos os Posts</button>
     </div>
 
-    <!-- SECÇÃO 2: LISTA DE PLANOS, QR CODE E PIX AUTOMÁTICO -->
-    <div class="card-container" style="border-color: rgba(243, 156, 18, 0.3);">
-        <h2 style="background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Secção II: Tabela de Planos Oficiais</h2>
-        
-        <div class="article-opinion" style="border-left-color: #f39c12;">
-            "A escolha do plano ideal define o patamar de destaque do seu perfil no ecossistema. Pague via PIX utilizando o QR Code ou a chave abaixo e os seus direitos de acesso serão desbloqueados de forma automática no sistema."
-        </div>
+    <div class="card-container">
+        <h2>Painel de Planos & Moedas</h2>
+        <p class="subtitle">Gerencie seu saldo e desbloqueie acessos especiais.</p>
+        <div class="coins-display">🪙 Suas Moedas: <span id="user-coins">0</span></div>
+        <button class="btn-action" onclick="coletarMoedasDiarias()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Resgatar Moedas Diárias (+10 🪙)</button>
+    </div>
 
-        <div class="plan-list-item">
-            <div class="plan-info">
-                <h4>⭐ Plano VIP Comunitário</h4>
-                <p>Prioridade máxima e selo dourado no feed comum.</p>
-            </div>
-            <div class="plan-price">R$ 15,00</div>
-        </div>
-
-        <div class="plan-list-item">
-            <div class="plan-info">
-                <h4>👑 Plano Realeza Exclusivo</h4>
-                <p>Acesso total ao canal imperial e posts fixados.</p>
-            </div>
-            <div class="plan-price">R$ 30,00</div>
-        </div>
-
-        <!-- QR Code gerado automaticamente para a sua chave Pix -->
-        <div style="text-align: center; margin-top: 15px;">
-            <p style="font-size: 0.8rem; color: #f39c12; margin-bottom: 5px;">Aponte a câmara do seu banco para o QR Code PIX:</p>
-            <div class="qrcode-container">
-                <img id="pixQRCode" src="" alt="QR Code PIX">
-            </div>
-        </div>
-
-        <div class="pix-box">
-            <strong>Chave PIX (E-mail):</strong> walysonfelipenascimento@gmail.com
-        </div>
-        <button class="btn-action" style="background: linear-gradient(45deg, #f39c12, #d35400); margin-top: 8px;" onclick="copiarPix()">Copiar Chave PIX</button>
-        
-        <!-- Botão de simulação de pagamento automático para liberar o plano de imediato -->
-        <button class="btn-action" style="background: #2ecc71; margin-top: 8px;" onclick="ativarPlanoAutomatico()">⚡ Já Paguei (Ativar Plano Automático)</button>
-        
-        <div class="support-info">
-            Suporte a pagamentos e ativações: <br>
-            <a href="mailto:onlyzlicinhoszbb@gmail.com">onlyzlicinhoszbb@gmail.com</a>
+    <div class="card-container">
+        <div class="plan-box">
+            <h3>⭐ Plano VIP / Realeza</h3>
+            <p>Desbloqueia a permissão de publicação nas áreas VIP e Exclusiva, além de acesso total aos canais.</p>
+            <button class="btn-action" onclick="ativarPlanoVip()">Ativar Plano VIP (Grátis para testes)</button>
         </div>
     </div>
 
     <script>
         window.onload = function() {
-            if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
-            atualizarSaldo();
-            carregarStreak();
-            gerarQRCodePix();
+            let email = localStorage.getItem('flowscore_email');
+            if (!email) { window.location.href = 'index.html'; return; }
+
+            // Carregar moedas atuais
+            let moedas = localStorage.getItem('flowscore_coins');
+            if (moedas === null) {
+                moedas = 20; // Bônus inicial
+                localStorage.setItem('flowscore_coins', moedas);
+            }
+            document.getElementById('user-coins').innerText = moedas;
+
+            // Verificação do Admin
+            if (email === 'onlyzlicinhoszbb@gmail.com') {
+                document.getElementById('admin-master-panel').style.display = 'block';
+                localStorage.setItem('flowscore_vip_ativo', 'true');
+            }
         };
 
-        function atualizarSaldo() {
-            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
-            document.getElementById('balance-display').innerText = `🪙 ${moedas}`;
-            localStorage.setItem('flowscore_coins', moedas);
-        }
-
-        function carregarStreak() {
-            let streak = parseInt(localStorage.getItem('flowscore_streak')) || 0;
-            let lastDate = localStorage.getItem('flowscore_last_checkin_date');
-            let hoje = new Date().toDateString();
-
-            if (lastDate) {
-                let diffTime = Math.abs(new Date(hoje) - new Date(lastDate));
-                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-                if (diffDays > 1) {
-                    streak = 0; 
-                    localStorage.setItem('flowscore_streak', 0);
-                }
-            }
-
-            let gridHTML = '';
-            for (let i = 1; i <= 30; i++) {
-                let statusClass = '';
-                if (i <= streak) statusClass = 'completed';
-                if (i === streak + 1 && lastDate !== hoje) statusClass = 'current';
-                gridHTML += `<div class="streak-day ${statusClass}">Dia ${i}</div>`;
-            }
-            document.getElementById('streakGrid').innerHTML = gridHTML;
-
-            const btn = document.getElementById('btn-checkin');
-            const text = document.getElementById('streak-text');
-
-            if (lastDate === hoje) {
-                btn.disabled = true;
-                btn.innerText = "Check-in de Hoje Realizado ✅";
-                text.innerText = `Sequência atual: Dia ${streak} / 30 (Volte amanhã)`;
-            } else {
-                btn.disabled = false;
-                btn.innerText = "📅 Registar Check-in de Hoje (+10 🪙)";
-                text.innerText = `Sequência atual: ${streak} dias cumpridos (Próximo: Dia ${streak + 1})`;
-            }
-        }
-
-        function fazerCheckin() {
-            let hoje = new Date().toDateString();
-            let streak = parseInt(localStorage.getItem('flowscore_streak')) || 0;
-            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
-
-            streak += 1;
-            if (streak > 30) streak = 1;
+        function coletarMoedasDiarias() {
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
             moedas += 10;
-
-            localStorage.setItem('flowscore_streak', streak);
-            localStorage.setItem('flowscore_last_checkin_date', hoje);
             localStorage.setItem('flowscore_coins', moedas);
-
-            atualizarSaldo();
-            carregarStreak();
-            alert(`Check-in do Dia ${streak} efetuado com sucesso! Ganhaste +10 moedas.`);
+            document.getElementById('user-coins').innerText = moedas;
+            alert('Você resgatou 10 moedas com sucesso!');
         }
 
-        function gerarQRCodePix() {
-            // Gera um QR Code oficial apontando para a sua chave Pix usando uma API pública de QR Code
-            const chavePix = "walysonfelipenascimento@gmail.com";
-            const urlQR = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(chavePix)}`;
-            document.getElementById('pixQRCode').src = urlQR;
-        }
-
-        function copiarPix() {
-            navigator.clipboard.writeText("walysonfelipenascimento@gmail.com").then(() => {
-                alert('Chave PIX copiada com sucesso!');
-            });
-        }
-
-        function ativarPlanoAutomatico() {
-            // Ativa automaticamentes os privilégios VIP no perfil do utilizador logado
+        function ativarPlanoVip() {
             localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert('Pagamento confirmado! Os seus direitos de acesso VIP / Realeza foram ativados automaticamente com sucesso.');
-            window.location.href = 'vip.html';
+            alert('Plano VIP / Realeza ativado com sucesso! Agora já podes publicar nas abas VIP e Exclusiva.');
+        }
+
+        function resetarDadosGerais() {
+            if (confirm('Tens certeza que queres apagar todos os posts globais?')) {
+                localStorage.removeItem('flowscore_all_posts');
+                alert('Todos os posts foram limpos com sucesso!');
+            }
         }
     </script>
 </body>
