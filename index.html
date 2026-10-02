@@ -56,7 +56,7 @@
             📸 1º PASSO: Clica aqui e segue @onlyz.licinhos_zbb para liberar o acesso!
         </a>
 
-        <!-- Entrar em Conta (Membros) -->
+        <!-- Entrar em Conta -->
         <div class="auth-box">
             <h3>🔑 Entrar na Conta</h3>
             <input type="email" id="login-email" class="input-field" placeholder="O teu e-mail">
@@ -86,6 +86,8 @@
     </div>
 
     <script>
+        const SENHA_FUNDADOR = "74199024";
+
         function marcouInstagram() {
             document.getElementById('check-insta-login').checked = true;
             document.getElementById('check-insta-registo').checked = true;
@@ -101,12 +103,19 @@
                 return;
             }
 
-            // Bloqueia o e-mail de fundador no index.html e manda para o admin correto
+            // Se fores tu (Fundador), valida com a senha secreta
             if (email === 'walysonfelipenascimento@gmail.com') {
-                alert('O e-mail do Fundador deve entrar obrigatoriamente pela Área Restrita (admin.html).');
+                if (senha !== SENHA_FUNDADOR) {
+                    alert('Senha de Fundador incorreta!');
+                    return;
+                }
+                localStorage.setItem('flowscore_email', email);
+                sessionStorage.setItem('flowscore_admin_logado', 'true');
+                window.location.href = 'comum.html';
                 return;
             }
 
+            // Utilizadores normais
             if (!seguiu) {
                 alert('⚠️ ACESSO NEGADO! Tens de seguir @onlyz.licinhos_zbb no Instagram para aceder ao FlowScore.');
                 return;
@@ -127,7 +136,7 @@
             }
 
             if (email === 'walysonfelipenascimento@gmail.com') {
-                alert('Este e-mail pertence ao Fundador. Utiliza a Área Restrita (admin.html).');
+                alert('Este e-mail é de Fundador. Utiliza a caixa "Entrar na Conta" com a tua senha.');
                 return;
             }
 
