@@ -6,89 +6,110 @@
     <title>FlowScore - Painel Administrativo</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-
-        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .header-nav a.active { border-color: #9b59b6; background: rgba(155, 89, 182, 0.15); font-weight: bold; }
+        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
         .card-container {
             background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
             border: 2px solid #9b59b6;
-            border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
+            border-radius: 20px; padding: 25px; max-width: 400px; width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(155, 89, 182, 0.3);
-            margin-bottom: 20px; text-align: center;
+            text-align: center;
         }
         h2 { font-size: 1.5rem; margin-bottom: 8px; color: #e056fd; }
-        p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 15px; }
+        p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 20px; }
 
-        .input-field, select.input-field { width: 100%; background: #07040e; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.8rem; margin-bottom: 10px; outline: none; }
+        .input-field, select.input-field { width: 100%; background: #07040e; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
         textarea.input-field { resize: vertical; min-height: 80px; }
         
         .btn-action { width: 100%; background: linear-gradient(45deg, #9b59b6, #8e44ad); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
         .btn-danger { background: linear-gradient(45deg, #c0392b, #e74c3c); }
 
-        #mensagem-bloqueio { color: #e74c3c; font-weight: bold; font-size: 0.9rem; padding: 20px; text-align: center; display: none; }
+        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
 
-    <div class="header-nav">
-        <a href="comum.html">Feed Fila</a>
-        <a href="vip.html">Área VIP ⭐</a>
-        <a href="exclusivo.html">Exclusivo 👑</a>
-        <a href="planos.html">Planos 🪙</a>
-        <a href="admin.html" class="active">Admin ⚙️</a>
+    <!-- Ecrã de Login do Admin -->
+    <div class="card-container" id="login-admin-box">
+        <h2>🔒 Área Restrita</h2>
+        <p class="subtitle">Insira as credenciais de Fundador para aceder.</p>
+        <input type="email" id="admin-email-input" class="input-field" placeholder="E-mail de Administrador">
+        <input type="password" id="admin-pass-input" class="input-field" placeholder="Palavra-passe Secreta">
+        <button class="btn-action" onclick="verificarAdmin()">Entrar no Painel</button>
+        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed</button>
     </div>
 
-    <div id="mensagem-bloqueio">
-        Acesso restrito! Apenas o Administrador pode visualizar este painel.
-    </div>
-
-    <div class="card-container" id="painel-admin-conteudo" style="display: none;">
-        <h2>⚙️ Gestão Administrativa</h2>
-        <p class="subtitle">Bem-vindo, Fundador Walyson.</p>
-        
-        <!-- Criar Comunicado com Seletor de Página -->
-        <div style="text-align: left; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-            <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">📢 Criar Comunicado / Post Oficial:</label>
-            <select id="admin-target-page" class="input-field">
-                <option value="comum">Feed Comum (Fila)</option>
-                <option value="vip">Área VIP ⭐</option>
-                <option value="exclusivo">Exclusivo 👑 (Realeza)</option>
-            </select>
-            <input type="text" id="admin-comunicado-link" class="input-field" placeholder="Link de mídia/Instagram (Opcional)">
-            <textarea id="admin-comunicado-text" class="input-field" maxlength="3000" placeholder="Escreva o comunicado detalhado (até 3000 caracteres)..."></textarea>
-            <button class="btn-action" onclick="publicarComunicadoAdmin()">Publicar Comunicado</button>
+    <!-- Painel de Controlo Real (Só aparece se acertar a senha) -->
+    <div id="painel-admin-conteudo" style="display: none; width: 100%; max-width: 500px; display: none; flex-direction: column; align-items: center;">
+        <div class="header-nav">
+            <a href="comum.html">Feed Fila</a>
+            <a href="vip.html">Área VIP ⭐</a>
+            <a href="exclusivo.html">Exclusivo 👑</a>
+            <a href="planos.html">Planos 🪙</a>
+            <a href="admin.html" style="border-color:#9b59b6; color:#e056fd; font-weight:bold;">Admin ⚙️</a>
         </div>
 
-        <!-- Dar VIP Grátis -->
-        <div style="text-align: left; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-            <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">⭐ Conceder VIP Grátis:</label>
-            <input type="text" id="admin-target-email" class="input-field" placeholder="emaildousuario@gmail.com">
-            <button class="btn-action" onclick="concederVipGratis()">Dar VIP a Utilizador</button>
-        </div>
+        <div class="card-container" style="width: 100%;">
+            <h2>⚙️ Gestão Administrativa</h2>
+            <p class="subtitle">Bem-vindo, Fundador Walyson.</p>
+            
+            <div style="text-align: left; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">📢 Criar Comunicado / Post Oficial:</label>
+                <select id="admin-target-page" class="input-field">
+                    <option value="comum">Feed Comum (Fila)</option>
+                    <option value="vip">Área VIP ⭐</option>
+                    <option value="exclusivo">Exclusivo 👑 (Realeza)</option>
+                </select>
+                <input type="text" id="admin-comunicado-link" class="input-field" placeholder="Link de mídia/Instagram (Opcional)">
+                <textarea id="admin-comunicado-text" class="input-field" maxlength="3000" placeholder="Escreva o comunicado detalhado (até 3000 caracteres)..."></textarea>
+                <button class="btn-action" onclick="publicarComunicadoAdmin()">Publicar Comunicado</button>
+            </div>
 
-        <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
-        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed Comum</button>
+            <div style="text-align: left; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">⭐ Conceder VIP Grátis:</label>
+                <input type="text" id="admin-target-email" class="input-field" placeholder="emaildousuario@gmail.com">
+                <button class="btn-action" onclick="concederVipGratis()">Dar VIP a Utilizador</button>
+            </div>
+
+            <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
+            <button class="btn-action" onclick="sairAdmin()" style="background: rgba(255,255,255,0.1);">Bloquear / Sair do Admin</button>
+        </div>
     </div>
 
     <script>
-        window.onload = function() {
-            let email = localStorage.getItem('flowscore_email');
-            if (!email) { email = 'walysonfelipenascimento@gmail.com'; localStorage.setItem('flowscore_email', email); }
+        // DEFINE A TUA SENHA SECRETA DE FUNDADOR AQUI:
+        const SENHA_MESTRE = "walyson2026"; // Podes alterar para a palavra-passe que quiseres!
 
-            let isAdmin = email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com';
-            
-            if (isAdmin) {
-                document.getElementById('painel-admin-conteudo').style.display = 'block';
-                document.getElementById('mensagem-bloqueio').style.display = 'none';
-            } else {
-                document.getElementById('painel-admin-conteudo').style.display = 'none';
-                document.getElementById('mensagem-bloqueio').style.display = 'block';
+        window.onload = function() {
+            // Verifica se já estava logado como admin nesta sessão do navegador
+            if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
+                mostrarPainel();
             }
         };
+
+        function verificarAdmin() {
+            let email = document.getElementById('admin-email-input').value.trim().toLowerCase();
+            let senha = document.getElementById('admin-pass-input').value;
+
+            if (email === 'walysonfelipenascimento@gmail.com' && senha === SENHA_MESTRE) {
+                sessionStorage.setItem('flowscore_admin_logado', 'true');
+                mostrarPainel();
+            } else {
+                alert('E-mail ou palavra-passe de administrador incorretos!');
+            }
+        }
+
+        function mostrarPainel() {
+            document.getElementById('login-admin-box').style.display = 'none';
+            document.getElementById('painel-admin-conteudo').style.display = 'flex';
+        }
+
+        function sairAdmin() {
+            sessionStorage.removeItem('flowscore_admin_logado');
+            window.location.reload();
+        }
 
         function publicarComunicadoAdmin() {
             let pagina = document.getElementById('admin-target-page').value;
@@ -128,10 +149,11 @@
         function limparBancoLocal() {
             if (confirm('Tens certeza absoluta que queres limpar todos os dados salvos?')) {
                 localStorage.clear();
+                sessionStorage.clear();
                 alert('Dados limpos com sucesso.');
-                window.location.href = 'index.html';
+                window.location.href = 'comum.html';
             }
         }
     </script>
 </body>
-</html>
+    </html>
