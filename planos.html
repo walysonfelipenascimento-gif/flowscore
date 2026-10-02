@@ -31,7 +31,7 @@
         .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
 
-        /* Painel exclusivo do Admin - Destacado em Roxo Imperial */
+        /* Painel Exclusivo do Administrador nesta página */
         .admin-panel { background: #1b1230; border: 2px dashed #9b59b6; border-radius: 20px; padding: 20px; max-width: 500px; width: 100%; margin-bottom: 20px; display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
         .admin-panel h3 { color: #e056fd; font-size: 1.1rem; margin-bottom: 8px; }
         .admin-panel p { font-size: 0.78rem; color: #d1b3ff; margin-bottom: 12px; }
@@ -46,10 +46,10 @@
         <a href="planos.html" class="active">Planos & Moedas 🪙</a>
     </div>
 
-    <!-- Painel Master do Administrador (Oculto por predefinição, aparece só para o admin) -->
+    <!-- Painel Master do Administrador (Aparece automaticamente se fores o Walyson) -->
     <div class="admin-panel" id="admin-master-panel">
         <h3>👑 Painel Master do Administrador</h3>
-        <p>Logado como Fundador (Walyson). Privilégios totais de moderação ativos.</p>
+        <p>Logado como Fundador (Walyson). Controlo total sobre o sistema e dados globais.</p>
         <button class="btn-action" onclick="resetarDadosGerais()" style="background: linear-gradient(45deg, #c0392b, #e74c3c);">Limpar / Resetar Todos os Posts</button>
     </div>
 
@@ -71,8 +71,7 @@
     <script>
         window.onload = function() {
             let email = localStorage.getItem('flowscore_email');
-            if (!email) { window.location.href = 'index.html'; return; }
-
+            
             // Carregar moedas atuais
             let moedas = localStorage.getItem('flowscore_coins');
             if (moedas === null) {
@@ -81,11 +80,8 @@
             }
             document.getElementById('user-coins').innerText = moedas;
 
-            // Verificação correta do teu e-mail de Admin
-            let emailFormatado = email.trim().toLowerCase();
-            let adminEmail = 'walysonfelipenascimento@gmail.com';
-
-            if (emailFormatado === adminEmail) {
+            // Verificação direta e segura do Admin
+            if (email && email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') {
                 document.getElementById('admin-master-panel').style.display = 'block';
                 localStorage.setItem('flowscore_vip_ativo', 'true');
             }
@@ -112,4 +108,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
