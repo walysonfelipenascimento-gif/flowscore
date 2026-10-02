@@ -11,7 +11,7 @@
         .admin-card {
             background: linear-gradient(135deg, #1c102b 0%, #0d0a1a 100%);
             border: 1px solid rgba(255, 42, 141, 0.5);
-            border-radius: 24px; padding: 30px 25px; max-width: 420px; width: 100%;
+            border-radius: 24px; padding: 30px 25px; max-width: 450px; width: 100%;
             box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 30px rgba(255, 42, 141, 0.2);
             text-align: center;
         }
@@ -20,48 +20,65 @@
         h1 { font-size: 1.7rem; color: #ff2a8d; margin-bottom: 5px; font-weight: bold; }
         p.subtitle { color: #aaa; font-size: 0.82rem; margin-bottom: 20px; }
 
-        .auth-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 16px; padding: 18px; text-align: left; }
+        .auth-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 16px; padding: 18px; text-align: left; margin-bottom: 15px; }
         .auth-box h3 { font-size: 0.9rem; color: #ff2a8d; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         
         .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 11px 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
         
-        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; margin-bottom: 8px; }
         .btn-primary:hover { opacity: 0.9; transform: scale(1.01); }
 
         .back-link { display: block; margin-top: 15px; font-size: 0.78rem; color: #888; text-decoration: none; transition: 0.2s; }
         .back-link:hover { color: #ff2a8d; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; text-align: left; }
+        .stat-box { background: #090614; border: 1px solid rgba(255, 42, 141, 0.2); border-radius: 10px; padding: 10px; }
+        .stat-box span { font-size: 0.75rem; color: #aaa; display: block; }
+        .stat-box strong { font-size: 1.1rem; color: #ff2a8d; }
     </style>
 </head>
 <body>
 
+    <!-- ECRÃ DE ENTRADA DO ADMIN (Pede apenas o e-mail, sem senha) -->
     <div class="admin-card" id="login-container">
         <div class="crown-icon">👑</div>
         <h1>Área Restrita</h1>
-        <p class="subtitle">Painel exclusivo do Fundador do FlowScore</p>
+        <p class="subtitle">Painel de Controlo do Fundador</p>
 
         <div class="auth-box">
-            <h3>🔒 Acesso de Administrador</h3>
-            <input type="email" id="admin-email" class="input-field" placeholder="E-mail do Fundador">
-            <input type="password" id="admin-senha" class="input-field" placeholder="Senha de Fundador">
-            <button class="btn-primary" onclick="entrarAdmin()">Entrar no Painel</button>
+            <h3>🔒 Identificação de Fundador</h3>
+            <input type="email" id="admin-email" class="input-field" placeholder="Insere o teu e-mail de Fundador">
+            <button class="btn-primary" onclick="entrarAdmin()">Aceder ao Painel</button>
         </div>
 
         <a href="index.html" class="back-link">← Voltar para a página principal</a>
     </div>
 
-    <!-- PAINEL DE CONTROLO DO ADMIN -->
+    <!-- PAINEL DE CONTROLO COMPLETO DO ADMIN -->
     <div class="admin-card" id="panel-container" style="display: none; text-align: left;">
         <div style="text-align: center; margin-bottom: 15px;">
             <div class="crown-icon">👑</div>
             <h1>Painel do Fundador</h1>
-            <p class="subtitle">Controlo total do FlowScore</p>
+            <p class="subtitle">Controlo total e gestão do FlowScore</p>
         </div>
 
-        <div class="auth-box" style="margin-bottom: 15px;">
-            <h3 style="color: #ff2a8d; margin-bottom: 8px;">📊 Gestão Geral</h3>
-            <p style="font-size: 0.82rem; color: #ccc; margin-bottom: 10px;">Tens controlo total sobre os membros, cargos e sistema de pontuação.</p>
-            <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c; margin-bottom: 8px;">🗑️ Reiniciar Dados do Sistema</button>
-            <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão Admin</button>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span>Total de Membros</span>
+                <strong id="total-membros">0</strong>
+            </div>
+            <div class="stat-box">
+                <span>Estado do Sistema</span>
+                <strong style="color: #4caf50;">Ativo 🟢</strong>
+            </div>
+        </div>
+
+        <div class="auth-box">
+            <h3 style="color: #ff2a8d; margin-bottom: 10px;">⚙️ Controles e Gestão</h3>
+            <button class="btn-primary" onclick="verMembros()">👥 Ver Lista de Membros</button>
+            <button class="btn-primary" onclick="darAdminExtra()" style="background: #7b1fa2;">🛡️ Gerir Cargos e Permissões</button>
+            <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c;">🗑️ Reiniciar Dados do Sistema</button>
+            <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão</button>
         </div>
 
         <a href="index.html" class="back-link" style="text-align: center; display: block;">Ir para a página principal</a>
@@ -69,30 +86,45 @@
 
     <script>
         const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
-        const SENHA_FUNDADOR = "74199024";
 
         window.onload = function() {
             if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
-                mostrarPainel();
+                ativarPainelAdmin();
             }
         };
 
         function entrarAdmin() {
             let emailInput = document.getElementById('admin-email').value.trim().toLowerCase();
-            let senhaInput = document.getElementById('admin-senha').value;
 
-            if (emailInput === EMAIL_FUNDADOR && senhaInput === SENHA_FUNDADOR) {
+            if (emailInput === EMAIL_FUNDADOR) {
                 sessionStorage.setItem('flowscore_admin_logado', 'true');
                 localStorage.setItem('flowscore_email', EMAIL_FUNDADOR);
-                mostrarPainel();
+                ativarPainelAdmin();
             } else {
-                alert('⚠️ Acesso Negado! E-mail ou Senha de Fundador incorretos.');
+                alert('⚠️ Acesso Negado! Este e-mail não pertence ao Fundador.');
             }
         }
 
-        function mostrarPainel() {
+        function ativarPainelAdmin() {
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('panel-container').style.display = 'block';
+            
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            document.getElementById('total-membros').innerText = membros.length;
+        }
+
+        function verMembros() {
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            if (membros.length === 0) {
+                alert('Ainda não existem membros registados.');
+                return;
+            }
+            let lista = membros.map(m => `- ${m.email} (${m.status})`).join('\n');
+            alert('Membros registados:\n\n' + lista);
+        }
+
+        function darAdminExtra() {
+            alert('Área de gestão de cargos e permissões avançadas do FlowScore.');
         }
 
         function sairAdmin() {
@@ -102,9 +134,9 @@
         }
 
         function limparDadosSistema() {
-            if (confirm('Tens a certeza que queres limpar todos os dados locais do sistema?')) {
+            if (confirm('Tens a certeza absoluta que queres apagar todos os dados do sistema?')) {
                 localStorage.clear();
-                alert('Dados limpos com sucesso!');
+                alert('Sistema reiniciado com sucesso!');
                 window.location.reload();
             }
         }
