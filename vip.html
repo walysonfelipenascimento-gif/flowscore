@@ -22,13 +22,12 @@
         h2 { font-size: 1.5rem; margin-bottom: 5px; color: #f1c40f; }
         p.subtitle { color: #aaa; font-size: 0.8rem; }
 
-        /* Caixa de publicação VIP */
         .publish-box { background: #141126; border: 1px solid #f1c40f; border-radius: 16px; padding: 18px; max-width: 500px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); display: none; text-align: left; }
         .publish-box h3 { font-size: 1rem; color: #f1c40f; margin-bottom: 12px; }
         .input-field { width: 100%; background: #0a0814; border: 1px solid rgba(241, 196, 15, 0.3); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.8rem; margin-bottom: 12px; outline: none; }
+        textarea.input-field { resize: vertical; min-height: 90px; }
         .btn-publicar { width: 100%; background: linear-gradient(45deg, #f1c40f, #d35400); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
 
-        /* Estilo dos Posts em Cartão */
         .post-card { background: #141126; border: 1px solid rgba(241, 196, 15, 0.4); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); max-width: 500px; width: 100%; text-align: left; }
         .post-header { display: flex; align-items: center; padding: 14px 16px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .post-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(45deg, #f1c40f, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.95rem; color: #fff; }
@@ -38,6 +37,8 @@
         .media-box { background: #000; padding: 20px 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .media-box p { font-size: 0.8rem; color: #ddd; margin-bottom: 6px; }
         .media-box a { font-size: 0.78rem; color: #f1c40f; text-decoration: underline; word-break: break-all; }
+
+        .post-text-content { padding: 15px 16px; font-size: 0.85rem; color: #e2d9f3; line-height: 1.4; word-break: break-word; white-space: pre-wrap; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         .post-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(0,0,0,0.2); }
         .post-impulses { font-size: 0.8rem; color: #aaa; }
@@ -60,11 +61,10 @@
         <p class="subtitle">Conteúdos e comunicados oficiais de alta prioridade.</p>
     </div>
 
-    <!-- Caixa para adicionar links e posts (Aparece para Admin ou VIP) -->
     <div class="publish-box" id="panel-publish">
-        <h3>⭐ Adicionar Post / Link VIP</h3>
-        <input type="text" id="vip-link" class="input-field" placeholder="Link Direto (Ex: https://www.instagram.com/p/...)">
-        <input type="text" id="vip-text" class="input-field" placeholder="Escreva uma legenda ou descrição...">
+        <h3>⭐ Adicionar Publicação VIP</h3>
+        <input type="text" id="vip-link" class="input-field" placeholder="Link Direto (Opcional)...">
+        <textarea id="vip-text" class="input-field" maxlength="3000" placeholder="Escreva sua mensagem detalhada (até 3000 caracteres)..."></textarea>
         <button class="btn-publicar" onclick="publicarVip()">Publicar no Feed VIP</button>
     </div>
 
@@ -92,14 +92,14 @@
             let email = localStorage.getItem('flowscore_email');
             let autor = (email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') ? 'Fundador ⭐ [VIP]' : 'Membro VIP';
 
-            if (!texto && !link) { alert('Insira pelo menos um link ou um texto.'); return; }
+            if (!texto && !link) { alert('Insira pelo menos um link ou uma mensagem.'); return; }
 
             let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
             posts.unshift({
                 id: Date.now(),
                 section: 'vip',
                 autor: autor,
-                texto: texto || 'Publicação VIP Oficial',
+                texto: texto,
                 link: link,
                 impulses: 0
             });
@@ -130,14 +130,15 @@
                             <div class="post-avatar">${avatarLetra}</div>
                             <div>
                                 <div class="post-user-info">${p.autor}</div>
-                                <div class="post-user-sub">${p.texto}</div>
+                                <div class="post-user-sub">Publicação Oficial VIP</div>
                             </div>
                         </div>
                         ${p.link ? `
                         <div class="media-box">
-                            <p>Publicação vinculada</p>
+                            <p>Mídia / Link vinculado</p>
                             <a href="${p.link}" target="_blank">${p.link}</a>
                         </div>` : ''}
+                        ${p.texto ? `<div class="post-text-content">${p.texto}</div>` : ''}
                         <div class="post-footer">
                             <span class="post-impulses">🚀 ${p.impulses || 0} impulsos</span>
                             <button class="btn-turbinar" onclick="turbinarVip(${p.id})">Turbinar (-5 🪙)</button>
