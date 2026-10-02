@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowScore - Plataforma de Engajamento</title>
+    <style>
+        /* Estilo Mar de Cores - Degradê Neon & Tema Escuro */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f0c20;
+            color: #ffffff;
+            padding-bottom: 50px;
+        }
+
+        /* Cabeçalho com Degradê Instagram */
+        header {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #fd1d1d, #f56040);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .lang-select select {
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Card de Saldo e Informações */
+        .user-card {
+            background: linear-gradient(135deg, #1f1b3a, #2d124d);
+            border: 1px solid #833ab4;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .saldo-box span {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff3399;
+        }
+
+        /* Seção Exclusivo (Walyson & Banda) */
+        .exclusivo-section {
+            background: linear-gradient(135deg, #833ab4, #fd1d1d);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(253, 29, 29, 0.3);
+        }
+
+        .badge-criador {
+            background: #ffffff;
+            color: #833ab4;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .exclusivo-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-acao {
+            background: linear-gradient(45deg, #f56040, #ff3399);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Abas VIP e Comum */
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #c13584;
+            padding-left: 10px;
+        }
+
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .feed-card {
+            background: #19152e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .vip-card {
+            border: 1px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Seção Pix VIP */
+        .pix-box {
+            background: #141126;
+            border: 2px dashed #c13584;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pix-key {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 16px;
+            color: #ff3399;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">FlowScore</div>
+        <div class="lang-select">
+            <select id="languagePicker" onchange="mudarIdioma()">
+                <option value="pt">🇧🇷 Português</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="es">🇪🇸 Español</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Painel do Usuário -->
+        <div class="user-card">
+            <div>
+                <h3 id="txt-welcome">Olá, Criador!</h3>
+                <p style="font-size: 14px; color: #aaa;">Status: Membro Ativo</p>
+            </div>
+            <div class="saldo-box">
+                <p id="txt-saldo-label" style="font-size: 12px; color: #aaa;">SEU SALDO</p>
+                <span>1.250 M$</span>
+            </div>
+        </div>
+
+        <!-- ABA EXCLUSIVO (Walyson & Banda) -->
+        <div class="exclusivo-section">
+            <span class="badge-criador">★ Espaço Exclusivo do Criador</span>
+            <h2 style="margin-top: 10px;">Perfil Oficial & Banda</h2>
+            <p style="font-size: 14px; opacity: 0.9;">Apoie os conteúdos oficiais do criador do site e ganhe bônus em moedas!</p>
+            
+            <div class="exclusivo-card">
+                <div>
+                    <h4>Instagram do Fundador (@onlyz.licinhosz_bb)</h4>
+                    <p style="font-size: 13px; color: #ddd; margin: 5px 0;">Confira os novos posts e lançamentos da banda.</p>
+                    <a href="https://instagram.com/onlyz.licinhosz_bb" target="_blank" class="btn-acao">+300 M$ | Apoiar no Instagram</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fila VIP -->
+        <h3 class="section-title">Destaques VIP (Atenção Prioritária)</h3>
+        <div class="feed-grid">
+            <div class="feed-card vip-card">
+                <span style="color: #ffd700; font-size: 12px; font-weight: bold;">[ VIP PRO ]</span>
+                <h4 style="margin: 5px 0;">@felipe_vlog</h4>
+                <p style="font-size: 13px; color: #aaa;">Ganhe +300 M$ ao avaliar este post</p>
+                <br>
+                <button class="btn-acao" onclick="alert('Redirecionando para avaliação...')">Avaliar Vídeo</button>
+            </div>
+        </div>
+
+        <!-- Fila Comum -->
+        <h3 class="section-title">Fila Comum (Troca de Avaliações)</h3>
+        <div class="feed-grid">
+            <div class="feed-card">
+                <h4>@canal_tech</h4>
+                <p style="font-size: 13px; color: #aaa;">Ganhe +100 M$ por visualização</p>
+                <br>
+                <button class="btn-acao" style="background: #333;" onclick="alert('Assistindo vídeo...')">Assistir</button>
+            </div>
+        </div>
+
+        <!-- Área de Pagamento VIP (Chave Pix) -->
+        <div class="pix-box">
+            <h3>Quer ir para a Área VIP e ter Destaque Máximo?</h3>
+            <p style="font-size: 14px; color: #aaa; margin-top: 5px;">Faça o Pix do seu plano e seu post entra direto no topo!</p>
+            <div class="pix-key">Chave Pix (E-mail): walysonfelipenascimento@gmail.com</div>
+            <p style="font-size: 12px; color: #888;">Após o pagamento, envie o comprovante para o mesmo e-mail para liberação imediata pelo Admin (Walyson).</p>
+        </div>
+
+    </div>
+
+    <!-- Script de Idioma Simples -->
+    <script>
+        function mudarIdioma() {
+            const lang = document.getElementById('languagePicker').value;
+            if(lang === 'en') {
+                document.getElementById('txt-welcome').innerText = "Hello, Creator!";
+                document.getElementById('txt-saldo-label').innerText = "YOUR BALANCE";
+            } else if(lang === 'es') {
+                document.getElementById('txt-welcome').innerText = "¡Hola, Creador!";
+                document.getElementById('txt-saldo-label').innerText = "TU SALDO";
+            } else {
+                document.getElementById('txt-welcome').innerText = "Olá, Criador!";
+                document.getElementById('txt-saldo-label').innerText = "SEU SALDO";
+            }
+        }
+    </script>
+</body>
+</html>
