@@ -3,157 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Painel Administrativo</title>
+    <title>FlowScore - Painel Exclusivo do Fundador</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body { background: #05030a; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        .card-container {
-            background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
-            border: 2px solid #9b59b6;
-            border-radius: 20px; padding: 25px; max-width: 400px; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(155, 89, 182, 0.3);
+        .admin-card {
+            background: linear-gradient(135deg, #1b0d26 0%, #0d0614 100%);
+            border: 1px solid rgba(255, 42, 141, 0.6);
+            border-radius: 24px; padding: 35px 25px; max-width: 400px; width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 141, 0.2);
             text-align: center;
         }
-        h2 { font-size: 1.5rem; margin-bottom: 8px; color: #e056fd; }
-        p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 20px; }
 
-        .input-field, select.input-field { width: 100%; background: #07040e; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
-        textarea.input-field { resize: vertical; min-height: 80px; }
-        
-        .btn-action { width: 100%; background: linear-gradient(45deg, #9b59b6, #8e44ad); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; transition: 0.3s; }
-        .btn-action:hover { opacity: 0.9; }
-        .btn-danger { background: linear-gradient(45deg, #c0392b, #e74c3c); }
+        .lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        h1 { font-size: 1.6rem; color: #ff2a8d; margin-bottom: 8px; font-weight: bold; }
+        p.subtitle { color: #b19cd9; font-size: 0.8rem; margin-bottom: 25px; line-height: 1.4; }
 
-        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.4); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
+        .input-field:focus { border-color: #ff2a8d; box-shadow: 0 0 10px rgba(255, 42, 141, 0.3); }
+
+        .btn-admin { width: 100%; background: linear-gradient(45deg, #ff2a8d, #9c27b0); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; margin-top: 5px; }
+        .btn-admin:hover { opacity: 0.9; transform: scale(1.01); }
+
+        .back-link { display: block; margin-top: 20px; color: #888; font-size: 0.75rem; text-decoration: none; transition: 0.2s; }
+        .back-link:hover { color: #ff2a8d; }
     </style>
 </head>
 <body>
 
-    <!-- Ecrã de Login do Admin -->
-    <div class="card-container" id="login-admin-box">
-        <h2>🔒 Área Restrita</h2>
-        <p class="subtitle">Insira as credenciais de Fundador para aceder.</p>
-        <input type="email" id="admin-email-input" class="input-field" placeholder="E-mail de Administrador">
-        <input type="password" id="admin-pass-input" class="input-field" placeholder="Palavra-passe Secreta">
-        <button class="btn-action" onclick="verificarAdmin()">Entrar no Painel</button>
-        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed</button>
-    </div>
+    <div class="admin-card">
+        <div class="lock-icon">🔐</div>
+        <h1>Área Restrita</h1>
+        <p class="subtitle">Insira as credenciais de Fundador para aceder com privilégios totais.</p>
 
-    <!-- Painel de Controlo Real (Só aparece se acertar a senha) -->
-    <div id="painel-admin-conteudo" style="display: none; width: 100%; max-width: 500px; display: none; flex-direction: column; align-items: center;">
-        <div class="header-nav">
-            <a href="comum.html">Feed Fila</a>
-            <a href="vip.html">Área VIP ⭐</a>
-            <a href="exclusivo.html">Exclusivo 👑</a>
-            <a href="planos.html">Planos 🪙</a>
-            <a href="admin.html" style="border-color:#9b59b6; color:#e056fd; font-weight:bold;">Admin ⚙️</a>
-        </div>
+        <input type="email" id="admin-email" class="input-field" value="walysonfelipenascimento@gmail.com" readonly>
+        <input type="password" id="admin-senha" class="input-field" placeholder="Palavra-passe de administrador">
 
-        <div class="card-container" style="width: 100%;">
-            <h2>⚙️ Gestão Administrativa</h2>
-            <p class="subtitle">Bem-vindo, Fundador Walyson.</p>
-            
-            <div style="text-align: left; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-                <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">📢 Criar Comunicado / Post Oficial:</label>
-                <select id="admin-target-page" class="input-field">
-                    <option value="comum">Feed Comum (Fila)</option>
-                    <option value="vip">Área VIP ⭐</option>
-                    <option value="exclusivo">Exclusivo 👑 (Realeza)</option>
-                </select>
-                <input type="text" id="admin-comunicado-link" class="input-field" placeholder="Link de mídia/Instagram (Opcional)">
-                <textarea id="admin-comunicado-text" class="input-field" maxlength="3000" placeholder="Escreva o comunicado detalhado (até 3000 caracteres)..."></textarea>
-                <button class="btn-action" onclick="publicarComunicadoAdmin()">Publicar Comunicado</button>
-            </div>
+        <button class="btn-admin" onclick="validarFundador()">Desbloquear Painel</button>
 
-            <div style="text-align: left; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-                <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">⭐ Conceder VIP Grátis:</label>
-                <input type="text" id="admin-target-email" class="input-field" placeholder="emaildousuario@gmail.com">
-                <button class="btn-action" onclick="concederVipGratis()">Dar VIP a Utilizador</button>
-            </div>
-
-            <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
-            <button class="btn-action" onclick="sairAdmin()" style="background: rgba(255,255,255,0.1);">Bloquear / Sair do Admin</button>
-        </div>
+        <a href="index.html" class="back-link">← Voltar para a página pública</a>
     </div>
 
     <script>
-        // DEFINE A TUA SENHA SECRETA DE FUNDADOR AQUI:
-        const SENHA_MESTRE = "walyson2026"; // Podes alterar para a palavra-passe que quiseres!
+        const SENHA_CORRETA_FUNDADOR = "74199024";
 
-        window.onload = function() {
-            // Verifica se já estava logado como admin nesta sessão do navegador
-            if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
-                mostrarPainel();
-            }
-        };
+        function validarFundador() {
+            let senha = document.getElementById('admin-senha').value;
 
-        function verificarAdmin() {
-            let email = document.getElementById('admin-email-input').value.trim().toLowerCase();
-            let senha = document.getElementById('admin-pass-input').value;
-
-            if (email === 'walysonfelipenascimento@gmail.com' && senha === SENHA_MESTRE) {
-                sessionStorage.setItem('flowscore_admin_logado', 'true');
-                mostrarPainel();
-            } else {
+            if (senha !== SENHA_CORRETA_FUNDADOR) {
                 alert('E-mail ou palavra-passe de administrador incorretos!');
+                return;
             }
-        }
 
-        function mostrarPainel() {
-            document.getElementById('login-admin-box').style.display = 'none';
-            document.getElementById('painel-admin-conteudo').style.display = 'flex';
-        }
-
-        function sairAdmin() {
-            sessionStorage.removeItem('flowscore_admin_logado');
-            window.location.reload();
-        }
-
-        function publicarComunicadoAdmin() {
-            let pagina = document.getElementById('admin-target-page').value;
-            let link = document.getElementById('admin-comunicado-link').value.trim();
-            let texto = document.getElementById('admin-comunicado-text').value.trim();
-
-            if (!texto && !link) { alert('Escreva uma mensagem ou adicione um link.'); return; }
-
-            let autor = 'Fundador 👑 [Oficial]';
-            if (pagina === 'vip') autor = 'Fundador ⭐ [VIP Oficial]';
-            if (pagina === 'exclusivo') autor = 'Fundador 👑 [Realeza Oficial]';
-
-            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
-            posts.unshift({
-                id: Date.now(),
-                section: pagina,
-                autor: autor,
-                texto: texto || 'Comunicado Oficial',
-                link: link,
-                impulses: 0
-            });
-
-            localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
-            document.getElementById('admin-comunicado-link').value = '';
-            document.getElementById('admin-comunicado-text').value = '';
-            alert(`Comunicado publicado com sucesso na secção: ${pagina.toUpperCase()}!`);
-        }
-
-        function concederVipGratis() {
-            let target = document.getElementById('admin-target-email').value.trim();
-            if (!target) { alert('Insira um e-mail válido.'); return; }
-            localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert(`O plano VIP/Realeza foi concedido com sucesso para: ${target}`);
-            document.getElementById('admin-target-email').value = '';
-        }
-
-        function limparBancoLocal() {
-            if (confirm('Tens certeza absoluta que queres limpar todos os dados salvos?')) {
-                localStorage.clear();
-                sessionStorage.clear();
-                alert('Dados limpos com sucesso.');
-                window.location.href = 'comum.html';
-            }
+            // Define a sessão de administrador e entra no feed com acesso total
+            sessionStorage.setItem('flowscore_admin_logado', 'true');
+            localStorage.setItem('flowscore_email', 'walysonfelipenascimento@gmail.com');
+            window.location.href = 'comum.html';
         }
     </script>
 </body>
-    </html>
+</html>
