@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowScore - Planos & Moedas</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+
+        .header-nav {
+            width: 100%; max-width: 550px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
+        }
+        .header-nav a {
+            color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s;
+        }
+        .header-nav a.active { border-color: #2ecc71; background: rgba(46, 204, 113, 0.15); font-weight: bold; }
+
+        .card-container {
+            background: linear-gradient(135deg, #19152e 0%, #141126 100%);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 20px; padding: 25px 20px; max-width: 550px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(46, 204, 113, 0.1);
+            margin-bottom: 25px;
+        }
+        
+        h2 { font-size: 1.5rem; margin-bottom: 12px; background: linear-gradient(45deg, #2ecc71, #1abc9c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+        
+        .article-opinion {
+            font-size: 0.85rem; color: #ccc; line-height: 1.5; margin-bottom: 20px; text-align: justify;
+            background: rgba(255, 255, 255, 0.02); border-left: 3px solid #2ecc71; padding: 12px 15px; border-radius: 0 8px 8px 0;
+        }
+
+        .coin-box {
+            background: rgba(46, 204, 113, 0.05); border: 1px solid rgba(46, 204, 113, 0.2); border-radius: 15px; padding: 15px; text-align: center; margin-bottom: 15px;
+        }
+        .coin-value { font-size: 1.8rem; font-weight: bold; color: #2ecc71; margin-bottom: 10px; }
+
+        .btn-action { 
+            width: 100%; background: linear-gradient(45deg, #2ecc71, #1abc9c); color: #fff; border: none; padding: 12px; 
+            border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; text-align: center; margin-top: 8px;
+        }
+        .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-action:disabled { background: #555; cursor: not-allowed; transform: none; }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin-top: 15px; text-align: left;
+        }
+        .plan-title { font-size: 1rem; font-weight: bold; color: #f39c12; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .plan-desc { font-size: 0.82rem; color: #aaa; margin-bottom: 12px; line-height: 1.4; }
+        
+        .pix-box {
+            background: rgba(0, 0, 0, 0.3); border: 1px dashed rgba(243, 156, 18, 0.5); padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.8rem; color: #ddd; word-break: break-all; text-align: center;
+        }
+        .btn-pix {
+            background: linear-gradient(45deg, #f39c12, #d35400);
+        }
+        .support-info {
+            font-size: 0.78rem; color: #aaa; margin-top: 12px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;
+        }
+        .support-info a { color: #f39c12; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="comum.html">Feed Fila</a>
+        <a href="vip.html">Área VIP</a>
+        <a href="exclusivo.html">Exclusivo</a>
+        <a href="planos.html" class="active">Planos & Moedas 🪙</a>
+    </div>
+
+    <!-- SECÇÃO 1: MOEDAS & CHECK-IN -->
+    <div class="card-container">
+        <h2>Secção I: O Ecossistema de Moedas & Recompensas</h2>
+        
+        <div class="article-opinion">
+            "No cenário atual de plataformas digitais, a retenção e o engajamento orgânico dependem de micro-recompensas assertivas. O sistema de moedas do FlowScore foi concebido sob a premissa de meritocracia: ao fazer check-in diário e interagir de forma qualificada com as publicações oficiais do criador (curtir e comentar), o utilizador acumula capital digital interno de forma multiplicada. Mecanismos antifraude garantem que cada recompensa seja única por conteúdo, preservando a integridade da economia interna."
+        </div>
+
+        <div class="coin-box">
+            <h3>Seu Saldo em Caixa</h3>
+            <div class="coin-value" id="balance-display">🪙 15</div>
+            
+            <button class="btn-action" id="btn-checkin" onclick="fazerCheckinDiario()">📅 Fazer Check-in Diário (+15 🪙)</button>
+            <p style="font-size: 0.75rem; color: #aaa; margin-top: 6px;" id="checkin-status">Check-in diário disponível hoje!</p>
+        </div>
+
+        <div class="plan-card" style="margin-top: 10px; background: rgba(46, 204, 113, 0.03);">
+            <div class="plan-title" style="color: #2ecc71;">⚡ Bônus Triplo por Interação</div>
+            <div class="plan-desc">
+                Curta e comente nas publicações oficiais do Criador para faturar <b>3x mais moedas</b> do que uma interação comum! (Válido 1 vez por post).
+            </div>
+        </div>
+    </div>
+
+    <!-- SECÇÃO 2: PLANOS PAGOS & PIX -->
+    <div class="card-container" style="border-color: rgba(243, 156, 18, 0.3);">
+        <h2 style="background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Secção II: Planos VIP & Monetização</h2>
+        
+        <div class="article-opinion" style="border-left-color: #f39c12;">
+            "A ascensão a patamares superiores de destaque exige infraestrutura dedicada e prioridade algorítmica. Os planos pagos do ecossistema estruturam-se como uma ponte direta entre criadores de conteúdo e o topo da visibilidade comunitária. Através de transações diretas e seguras via PIX, o assinante garante prioridade máxima de exibição, selo verificado dourado e destaque contínuo no mural de interações."
+        </div>
+
+        <div class="plan-card">
+            <div class="plan-title">
+                <span>⭐ Plano VIP Mensal</span>
+                <span style="color: #2ecc71;">R$ 15,00 / mês</span>
+            </div>
+            <div class="plan-desc">
+                Garante prioridade máxima nas filas de engajamento, selo VIP exclusivo no feed e postagens fixadas com maior destaque visual.
+            </div>
+            
+            <div class="pix-box" id="pixKeyText">
+                <strong>Chave PIX (E-mail):</strong> walysonfelipenascimento@gmail.com
+            </div>
+            <button class="btn-action btn-pix" onclick="copiarPix()">Copiar Chave PIX</button>
+            <button class="btn-action" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem;" onclick="enviarComprovativo()">Já paguei? Enviar Comprovativo</button>
+            
+            <div class="support-info">
+                Problemas com pagamento ou acesso? Contacte o suporte: <br>
+                <a href="mailto:onlyzlicinhoszbb@gmail.com">onlyzlicinhoszbb@gmail.com</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
+            atualizarSaldo();
+            verificarCheckinStatus();
+        };
+
+        function atualizarSaldo() {
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
+            document.getElementById('balance-display').innerText = `🪙 ${moedas}`;
+            localStorage.setItem('flowscore_coins', moedas);
+        }
+
+        function verificarCheckinStatus() {
+            const hoje = new Date().toDateString();
+            const ultimoCheckin = localStorage.getItem('flowscore_last_checkin');
+            const btnCheckin = document.getElementById('btn-checkin');
+            const statusText = document.getElementById('checkin-status');
+
+            if (ultimoCheckin === hoje) {
+                btnCheckin.disabled = true;
+                btnCheckin.innerText = "Check-in já realizado hoje ✅";
+                statusText.innerText = "Volte amanhã para resgatar mais moedas!";
+            } else {
+                btnCheckin.disabled = false;
+                btnCheckin.innerText = "📅 Fazer Check-in Diário (+15 🪙)";
+                statusText.innerText = "Check-in diário disponível hoje!";
+            }
+        }
+
+        function fazerCheckinDiario() {
+            const hoje = new Date().toDateString();
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
+            
+            moedas += 15;
+            localStorage.setItem('flowscore_coins', moedas);
+            localStorage.setItem('flowscore_last_checkin', hoje);
+            
+            atualizarSaldo();
+            verificarCheckinStatus();
+            alert('Check-in efetuado com sucesso! Ganhaste +15 moedas.');
+        }
+
+        function copiarPix() {
+            const chave = "walysonfelipenascimento@gmail.com";
+            navigator.clipboard.writeText(chave).then(() => {
+                alert('Chave PIX copiada com sucesso! Cole no aplicativo do seu banco.');
+            }).catch(err => {
+                alert('Erro ao copiar a chave. A chave é: ' + chave);
+            });
+        }
+
+        function enviarComprovativo() {
+            const emailUser = localStorage.getItem('flowscore_email');
+            const mensagem = encodeURIComponent(`Olá Fundador Walyson, realizei o pagamento do Plano VIP via PIX. Meu e-mail de cadastro é: ${emailUser}`);
+            window.open(`https://wa.me/?text=${mensagem}`, '_blank');
+        }
+    </script>
+</body>
+</html>
