@@ -22,13 +22,27 @@
         h2 { font-size: 1.6rem; margin-bottom: 5px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
 
-        .post-card { background: #141126; border: 1px solid rgba(243, 156, 18, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: left; max-width: 500px; width: 100%; }
-        .post-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .post-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #f39c12, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
-        .post-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
-        .post-user-sub { font-size: 0.7rem; color: #f39c12; }
-        .post-content { padding: 15px; font-size: 0.85rem; color: #ddd; line-height: 1.4; word-break: break-word; }
-        .post-link { display: block; padding: 12px; background: rgba(0,0,0,0.3); color: #f39c12; text-decoration: none; font-size: 0.8rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        /* Estilo idêntico ao feed da tua foto */
+        .post-card { background: #141126; border: 1px solid rgba(243, 156, 18, 0.5); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); max-width: 500px; width: 100%; text-align: left; }
+        .post-header { display: flex; align-items: center; padding: 12px 15px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .post-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(45deg, #f39c12, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; color: #fff; }
+        .post-user-info { font-size: 0.85rem; color: #fff; font-weight: bold; }
+        .post-user-sub { font-size: 0.72rem; color: #f39c12; }
+        
+        .media-box { background: #000; padding: 20px 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .media-box p { font-size: 0.85rem; color: #ddd; margin-bottom: 8px; }
+        .media-box a { font-size: 0.8rem; color: #f39c12; text-decoration: underline; word-break: break-all; }
+
+        .post-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(0,0,0,0.2); }
+        .post-impulses { font-size: 0.8rem; color: #aaa; }
+        .btn-turbinar { background: transparent; border: 1px solid #f39c12; color: #f39c12; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-turbinar:hover { background: rgba(243, 156, 18, 0.15); }
+
+        /* Caixa de publicação para Admin/VIP */
+        .publish-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.5); border-radius: 16px; padding: 15px; max-width: 500px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .publish-box h3 { font-size: 1rem; color: #f39c12; margin-bottom: 10px; }
+        .input-field { width: 100%; background: #0a0814; border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 8px; padding: 10px; color: #fff; font-size: 0.8rem; margin-bottom: 10px; outline: none; }
+        .btn-publicar { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -45,12 +59,61 @@
         <p class="subtitle">Conteúdos e comunicados oficiais de alta prioridade.</p>
     </div>
 
+    <!-- Painel de publicação visível apenas se for Admin ou tiver o plano VIP ativo -->
+    <div class="publish-box" id="panel-publish" style="display: none;">
+        <h3>⭐ Publicar na Área VIP</h3>
+        <input type="text" id="vip-link" class="input-field" placeholder="Link Direto da Publicação (Ex: https://www.instagram.com/p/...)">
+        <input type="text" id="vip-text" class="input-field" placeholder="Escreva uma legenda ou descrição...">
+        <button class="btn-publicar" onclick="publicarVip()">Publicar no Feed VIP</button>
+    </div>
+
     <div style="max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center;" id="vip-timeline"></div>
 
     <script>
         window.onload = function() {
-            if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
+            let email = localStorage.getItem('flowscore_email');
+            if (!email) { window.location.href = 'index.html'; return; }
+
+            // Verifica se tem permissão para publicar (Admin ou VIP ativo)
+            let isAdmin = (email === 'onlyzlicinhoszbb@gmail.com');
+            let isVip = localStorage.getItem('flowscore_vip_ativo') === 'true';
             
+            if (isAdmin || isVip) {
+                document.getElementById('panel-publish').style.display = 'block';
+            }
+
+            carregarPostsVip();
+        };
+
+        function publicarVip() {
+            let link = document.getElementById('vip-link').value.trim();
+            let texto = document.getElementById('vip-text').value.trim();
+            let email = localStorage.getItem('flowscore_email');
+            let autor = (email === 'onlyzlicinhoszbb@gmail.com') ? 'Fundador ⭐ [VIP]' : 'Membro VIP';
+
+            if (!texto && !link) {
+                alert('Preencha pelo menos o link ou o texto.');
+                return;
+            }
+
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            posts.unshift({
+                id: Date.now(),
+                section: 'vip',
+                autor: autor,
+                texto: texto || 'Publicação VIP Oficial',
+                link: link,
+                impulsos: 0
+            });
+
+            localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
+            document.getElementById('vip-link').value = '';
+            document.getElementById('vip-text').value = '';
+            carregarPostsVip();
+            alert('Publicação VIP efetuada com sucesso!');
+        }
+
+        function carregarPostsVip() {
             const timeline = document.getElementById('vip-timeline');
             let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
             let vipPosts = posts.filter(p => p.section === 'vip');
@@ -61,21 +124,48 @@
             }
 
             timeline.innerHTML = '';
-            vipPosts.forEach(p => {
+            vipPosts.forEach((p, index) => {
+                let avatarLetra = p.autor ? p.autor.charAt(0) : 'V';
                 timeline.innerHTML += `
                     <div class="post-card">
                         <div class="post-header">
-                            <div class="post-avatar">⭐</div>
+                            <div class="post-avatar">${avatarLetra}</div>
                             <div>
-                                <div class="post-user-info">${p.autor || 'Membro VIP'}</div>
-                                <div class="post-user-sub">Destaque Oficial</div>
+                                <div class="post-user-info">${p.autor}</div>
+                                <div class="post-user-sub">${p.texto}</div>
                             </div>
                         </div>
-                        <div class="post-content">${p.texto}</div>
-                        ${p.link ? `<a href="${p.link}" target="_blank" class="post-link">🔗 Aceder ao Link / Mídia da Publicação</a>` : ''}
+                        ${p.link ? `
+                        <div class="media-box">
+                            <p>Publicação vinculada</p>
+                            <a href="${p.link}" target="_blank">${p.link}</a>
+                        </div>` : ''}
+                        <div class="post-footer">
+                            <span class="post-impulses">🚀 ${p.impulses || 0} impulsos</span>
+                            <button class="btn-turbinar" onclick="turbinarVip(${p.id})">Turbinar (-5 🪙)</button>
+                        </div>
                     </div>`;
             });
-        };
+        }
+
+        function turbinarVip(id) {
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
+            if (moedas < 5) {
+                alert('Moedas insuficientes! Faça check-ins na aba Planos & Moedas.');
+                return;
+            }
+            moedas -= 5;
+            localStorage.setItem('flowscore_coins', moedas);
+
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            let post = posts.find(p => p.id === id);
+            if (post) {
+                post.impulses = (post.impulses || 0) + 1;
+                localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
+                carregarPostsVip();
+                alert('Post impulsionado com sucesso!');
+            }
+        }
     </script>
 </body>
 </html>
