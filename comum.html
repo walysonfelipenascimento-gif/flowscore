@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Fila Comum</title>
+    <title>FlowScore - Fila Comum e Mural</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
@@ -48,123 +48,110 @@
             background: linear-gradient(135deg, #19152e 0%, #141126 100%);
             border: 1px solid rgba(193, 53, 132, 0.3);
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             max-width: 600px;
             width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
-            text-align: center;
             margin-bottom: 20px;
         }
 
         h2 { 
-            font-size: 2rem; 
-            margin-bottom: 10px;
+            font-size: 1.8rem; 
+            margin-bottom: 5px;
             background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
-        /* Espaço de Recados do Fundador */
-        .founder-box {
-            background: rgba(193, 53, 132, 0.08);
-            border-left: 4px solid #ff3399;
-            border-radius: 0 12px 12px 0;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .founder-title {
-            font-size: 0.85rem;
-            color: #ff3399;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-        }
-
-        .founder-msg {
-            font-size: 0.9rem;
-            color: #ddd;
-            line-height: 1.4;
-        }
+        p.subtitle { text-align: center; color: #aaa; font-size: 0.85rem; margin-bottom: 15px; }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
-        .stat-box {
+        .stat-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 15px;
+            text-align: center;
         }
 
-        .stat-box h4 { font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
-        .stat-box p { font-size: 1.5rem; font-weight: bold; color: #ff3399; }
+        .stat-card h3 { font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
+        .stat-value { font-size: 1.3rem; font-weight: bold; color: #ff3399; }
 
-        /* Bloco de Diretrizes */
-        .guidelines-box {
-            background: rgba(25, 21, 46, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            max-width: 600px;
+        .form-group { margin-bottom: 12px; text-align: left; }
+        label { display: block; font-size: 0.85rem; color: #ddd; margin-bottom: 5px; }
+        input[type="text"], textarea {
             width: 100%;
-            text-align: left;
-        }
-
-        .guidelines-box h3 {
-            font-size: 1rem;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            outline: none;
+            font-size: 0.9rem;
         }
-
-        .guidelines-box ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        .guidelines-box li {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .guidelines-box li::before {
-            content: "•";
-            color: #ff3399;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
+        textarea { resize: vertical; height: 70px; }
+        input:focus, textarea:focus { border-color: #ff3399; }
 
         .btn-action { 
             width: 100%;
             background: linear-gradient(45deg, #ff3399, #c13584);
             color: #fff;
             border: none;
-            padding: 14px; 
-            border-radius: 12px; 
+            padding: 12px; 
+            border-radius: 10px; 
             font-weight: bold; 
             cursor: pointer;
-            font-size: 1rem;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.3);
+            font-size: 0.95rem;
             text-decoration: none;
             display: inline-block;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.3);
         }
-
         .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .post-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 12px;
+            text-align: left;
+        }
+        .post-item.vip-post {
+            border-color: #ff3399;
+            background: rgba(255, 51, 153, 0.05);
+        }
+        .post-desc { font-size: 0.9rem; color: #fff; margin-bottom: 8px; }
+        .post-link { font-size: 0.8rem; color: #ff3399; word-break: break-all; display: block; margin-bottom: 10px; }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #888;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 8px;
+        }
+        .boost-btn {
+            background: rgba(255, 51, 153, 0.2);
+            border: 1px solid #ff3399;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .boost-btn:hover { background: rgba(255, 51, 153, 0.4); }
     </style>
 </head>
 <body>
@@ -173,45 +160,145 @@
         <a href="comum.html" class="active">Fila Comum</a>
         <a href="vip.html">Área VIP</a>
         <a href="exclusivo.html">Exclusivo Criador</a>
-        <a href="admin.html">Admin</a>
+        <a href="admin.html" id="nav-admin" style="display: none;">Admin</a>
     </div>
 
+    <!-- Painel de Perfil e Moedas -->
     <div class="card-container">
         <h2>Fila Comum</h2>
-        <p style="color: #bbb; font-size: 0.9rem;">Acompanhe o seu fluxo e interações na plataforma.</p>
-
-        <!-- Recado do Fundador -->
-        <div class="founder-box">
-            <div class="founder-title">📢 Aviso do Fundador (Walyson)</div>
-            <div class="founder-msg">
-                Sejam bem-vindos à plataforma! Cumpram todas as diretrizes, mantenham o respeito e fiquem atentos às novidades. O sistema de moedas e filas está ativo para garantir a organização de todos.
-            </div>
-        </div>
+        <p class="subtitle" id="user-greeting">Gerencie as suas publicações e engajamento.</p>
 
         <div class="stats-grid">
-            <div class="stat-box">
-                <h4>Suas Moedas</h4>
-                <p>🪙 0</p>
+            <div class="stat-card">
+                <h3>Suas Moedas</h3>
+                <div class="stat-value" id="user-coins">🪙 15</div>
             </div>
-            <div class="stat-box">
-                <h4>Sua Posição</h4>
-                <p>#--</p>
+            <div class="stat-card">
+                <h3>Seu Status</h3>
+                <div class="stat-value" id="user-tier" style="font-size: 1.1rem; margin-top: 4px;">Comum</div>
             </div>
         </div>
-
-        <a href="vip.html" class="btn-action">Quero Virar VIP (Subir Agora)</a>
     </div>
 
-    <!-- Diretrizes Profissionais -->
-    <div class="guidelines-box">
-        <h3>📋 Diretrizes e Normas da Fila</h3>
-        <ul>
-            <li>É obrigatório seguir o criador e manter o cadastro regularizado para validação.</li>
-            <li>O uso de linguagem ofensiva ou tentativa de burlar o sistema resulta em banimento imediato.</li>
-            <li>Membros VIP possuem prioridade automática nas filas e acesso a conteúdos exclusivos.</li>
-            <li>Dúvidas sobre pagamentos e liberação de planos devem ser consultadas com a administração.</li>
-        </ul>
+    <!-- Criar Publicação / Adicionar Link -->
+    <div class="card-container">
+        <h3 style="font-size: 1.1rem; color: #ff3399; margin-bottom: 12px;">➕ Adicionar Nova Publicação</h3>
+        
+        <div class="form-group">
+            <label>Descrição do Conteúdo / Perfil</label>
+            <input type="text" id="postDesc" placeholder="Ex: Sigam meu perfil de edição!">
+        </div>
+        <div class="form-group">
+            <label>Link de Divulgação</label>
+            <input type="text" id="postLink" placeholder="https://instagram.com/seu_perfil">
+        </div>
+        
+        <button class="btn-action" onclick="criarPublicacao()">Publicar na Fila</button>
     </div>
+
+    <!-- Mural de Publicações -->
+    <div class="card-container">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 10px;">🌐 Mural de Divulgação</h3>
+        <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 15px;">Interaja, acesse os links e turbine com moedas para subir de posição.</p>
+        
+        <div id="mural-posts">
+            <!-- As publicações aparecem aqui dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
+
+        // Carregar dados iniciais do localStorage ou criar padrão
+        let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
+        let publicacoes = JSON.parse(localStorage.getItem('flowscore_posts')) || [
+            { desc: "Perfil oficial da plataforma - Sigam!", link: "https://instagram.com/onlyz.licinhosz_bb", autor: "Fundador", vip: true, impulsionado: 5 },
+            { desc: "Conheça o meu canal de jogos e novidades!", link: "https://instagram.com", autor: "usuario@gmail.com", vip: false, impulsionado: 0 }
+        ];
+
+        window.onload = function() {
+            const emailSalvo = localStorage.getItem('flowscore_email');
+            
+            if (!emailSalvo) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const greeting = document.getElementById('user-greeting');
+            if (emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase()) {
+                greeting.innerText = `Sessão: Fundador Walyson`;
+                document.getElementById('nav-admin').style.display = 'inline-block';
+                document.getElementById('user-tier').innerText = '👑 Fundador';
+            } else {
+                greeting.innerText = `Sessão: ${emailSalvo}`;
+            }
+
+            atualizarInterface();
+        };
+
+        function atualizarInterface() {
+            document.getElementById('user-coins').innerText = `🪙 ${moedas}`;
+            localStorage.setItem('flowscore_coins', moedas);
+            localStorage.setItem('flowscore_posts', JSON.stringify(publicacoes));
+
+            const mural = document.getElementById('mural-posts');
+            mural.innerHTML = '';
+
+            // Ordenar publicações por nível VIP e quantidade de impulsos
+            publicacoes.sort((a, b) => (b.vip - a.vip) || (b.impulsionado - a.impulsionado));
+
+            publicacoes.forEach((p, index) => {
+                const div = document.createElement('div');
+                div.className = `post-item ${p.vip ? 'vip-post' : ''}`;
+                div.innerHTML = `
+                    <div class="post-desc">${p.vip ? '⭐ [VIP] ' : ''}${p.desc}</div>
+                    <a href="${p.link}" target="_blank" class="post-link">${p.link}</a>
+                    <div class="post-footer">
+                        <span>Por: ${p.autor} | 🚀 ${p.impulsionado} impulsos</span>
+                        <button class="boost-btn" onclick="turbinarPost(${index})">Turbinar (-5 🪙)</button>
+                    </div>
+                `;
+                mural.appendChild(div);
+            });
+        }
+
+        function criarPublicacao() {
+            const desc = document.getElementById('postDesc').value.trim();
+            const link = document.getElementById('postLink').value.trim();
+            const emailSalvo = localStorage.getItem('flowscore_email');
+
+            if (!desc || !link) {
+                alert('Por favor, preencha a descrição e o link!');
+                return;
+            }
+
+            const isVip = emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase();
+
+            publicacoes.unshift({
+                desc: desc,
+                link: link,
+                autor: emailSalvo,
+                vip: isVip,
+                impulsionado: 0
+            });
+
+            document.getElementById('postDesc').value = '';
+            document.getElementById('postLink').value = '';
+            atualizarInterface();
+            alert('Publicação enviada para o mural com sucesso!');
+        }
+
+        function turbinarPost(index) {
+            if (moedas < 5) {
+                alert('Você não tem moedas suficientes para turbinar! Interaja ou aguarde.');
+                return;
+            }
+            moedas -= 5;
+            publicacoes[index].impulsionado += 1;
+            atualizarInterface();
+            alert('Publicação turbinada com sucesso! Subiu no ranking.');
+        }
+    </script>
 
 </body>
 </html>
