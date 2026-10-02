@@ -31,9 +31,14 @@
         .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
 
-        .admin-panel { background: #1b1230; border: 2px dashed #9b59b6; border-radius: 20px; padding: 20px; max-width: 500px; width: 100%; margin-bottom: 20px; display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-        .admin-panel h3 { color: #e056fd; font-size: 1.1rem; margin-bottom: 8px; }
-        .admin-panel p { font-size: 0.78rem; color: #d1b3ff; margin-bottom: 12px; }
+        /* Grelha de Check-in de 30 Dias */
+        .grid-checkin { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 15px; }
+        .day-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 8px; padding: 8px 4px; text-align: center; font-size: 0.7rem; color: #aaa; }
+        .day-box.completed { background: rgba(39, 174, 96, 0.2); border-color: #27ae60; color: #2ecc71; }
+        .day-box.active-day { border-color: #f39c12; background: rgba(243, 156, 18, 0.2); color: #f1c40f; font-weight: bold; }
+
+        .qr-box { background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin: 10px 0; }
+        .qr-box img { width: 130px; height: 130px; display: block; }
     </style>
 </head>
 <body>
@@ -42,28 +47,29 @@
         <a href="comum.html">Feed Fila</a>
         <a href="vip.html">Área VIP ⭐</a>
         <a href="exclusivo.html">Exclusivo 👑</a>
-        <a href="planos.html" class="active">Planos & Moedas 🪙</a>
+        <a href="planos.html" class="active">Planos 🪙</a>
         <a href="admin.html" id="nav-admin-link" style="display:none; border-color:#9b59b6; color:#e056fd;">Painel Admin ⚙️</a>
-    </div>
-
-    <div class="admin-panel" id="admin-master-panel">
-        <h3>👑 Painel Master do Administrador</h3>
-        <p>Logado como Fundador (Walyson). Controlo total sobre o sistema.</p>
-        <button class="btn-action" onclick="resetarDadosGerais()" style="background: linear-gradient(45deg, #c0392b, #e74c3c);">Limpar / Resetar Todos os Posts</button>
     </div>
 
     <div class="card-container">
         <h2>Painel de Planos & Moedas</h2>
-        <p class="subtitle">Gerencie seu saldo e desbloqueie acessos especiais.</p>
-        <div class="coins-display">🪙 Suas Moedas: <span id="user-coins">30</span></div>
-        <button class="btn-action" onclick="coletarMoedasDiarias()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Resgatar Moedas Diárias (+10 🪙)</button>
+        <p class="subtitle">Gerencie seu saldo e resgate recompensas diárias.</p>
+        <div class="coins-display">🪙 Suas Moedas: <span id="user-coins">0</span></div>
+        <button class="btn-action" onclick="fazerCheckinDiario()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Fazer Check-in de Hoje</button>
+
+        <div class="grid-checkin" id="checkin-grid"></div>
     </div>
 
     <div class="card-container">
         <div class="plan-box">
-            <h3>⭐ Plano VIP / Realeza</h3>
-            <p>Desbloqueia a permissão de publicação nas áreas VIP e Exclusiva, além de acesso total aos canais.</p>
-            <button class="btn-action" onclick="ativarPlanoVip()">Ativar Plano VIP (Grátis para testes)</button>
+            <h3>⭐ Assinatura VIP / Realeza (PIX)</h3>
+            <p>Escaneie o QR Code abaixo para pagar via PIX ou clique no botão para ativação automática de teste.</p>
+            <div style="text-align: center;">
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=FlowScorePixSimuladoVIP" alt="QR Code PIX">
+                </div>
+            </div>
+            <button class="btn-action" onclick="ativarPlanoVip()">Ativar VIP Automaticamente</button>
         </div>
     </div>
 
@@ -72,37 +78,65 @@
             let email = localStorage.getItem('flowscore_email');
             if (!email) { email = 'walysonfelipenascimento@gmail.com'; localStorage.setItem('flowscore_email', email); }
 
-            let moedas = localStorage.getItem('flowscore_coins');
-            if (moedas === null) { moedas = 30; localStorage.setItem('flowscore_coins', moedas); }
-            document.getElementById('user-coins').innerText = moedas;
-
-            // Identificação de Administrador e VIP
-            let isAdmin = email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com';
-            if (isAdmin) {
-                document.getElementById('admin-master-panel').style.display = 'block';
-                document.getElementById('nav-admin-link').style.display = 'inline-block';
-                localStorage.setItem('flowscore_vip_ativo', 'true');
-            }
-        };
-
-        function coletarMoedasDiarias() {
-            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
-            moedas += 10;
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 30;
             localStorage.setItem('flowscore_coins', moedas);
             document.getElementById('user-coins').innerText = moedas;
-            alert('Você resgatou 10 moedas com sucesso!');
+
+            if (email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') {
+                document.getElementById('nav-admin-link').style.display = 'inline-block';
+            }
+
+            renderizarCheckinGrid();
+        };
+
+        function obterRecompensaDia(dia) {
+            // Progressivo até o dia 30 dar exatamente 350 moedas
+            if (dia === 30) return 350;
+            return Math.min(10 + (dia * 3), 300);
+        }
+
+        function renderizarCheckinGrid() {
+            const grid = document.getElementById('checkin-grid');
+            grid.innerHTML = '';
+            let streak = parseInt(localStorage.getItem('flowscore_streak')) || 0;
+
+            for (let i = 1; i <= 30; i++) {
+                let recompensa = obterRecompensaDia(i);
+                let classe = '';
+                if (i <= streak) classe = 'completed';
+                if (i === streak + 1) classe = 'active-day';
+
+                grid.innerHTML += `
+                    <div class="day-box ${classe}">
+                        <div>D${i}</div>
+                        <div style="font-size:0.6rem; color:#f1c40f;">+${recompensa}</div>
+                    </div>`;
+            }
+        }
+
+        function fazerCheckinDiario() {
+            let streak = parseInt(localStorage.getItem('flowscore_streak')) || 0;
+            if (streak >= 30) {
+                alert('Parabéns! Já completaste o ciclo de 30 dias. O ciclo será reiniciado.');
+                streak = 0;
+            }
+
+            streak += 1;
+            let ganho = obterRecompensaDia(streak);
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
+            moedas += ganho;
+
+            localStorage.setItem('flowscore_streak', streak);
+            localStorage.setItem('flowscore_coins', moedas);
+
+            document.getElementById('user-coins').innerText = moedas;
+            renderizarCheckinGrid();
+            alert(`Check-in do Dia ${streak} realizado com sucesso! Ganhaste ${ganho} moedas 🪙.`);
         }
 
         function ativarPlanoVip() {
             localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert('Plano VIP / Realeza ativado com sucesso!');
-        }
-
-        function resetarDadosGerais() {
-            if (confirm('Tens certeza que queres apagar todos os posts globais?')) {
-                localStorage.removeItem('flowscore_all_posts');
-                alert('Todos os posts foram limpos com sucesso!');
-            }
+            alert('Pagamento detetado! Plano VIP / Realeza ativado com sucesso.');
         }
     </script>
 </body>
