@@ -22,7 +22,9 @@
         h2 { font-size: 1.5rem; margin-bottom: 8px; color: #e056fd; }
         p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 15px; }
 
-        .input-field { width: 100%; background: #07040e; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.8rem; margin-bottom: 10px; outline: none; }
+        .input-field, select.input-field { width: 100%; background: #07040e; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.8rem; margin-bottom: 10px; outline: none; }
+        textarea.input-field { resize: vertical; min-height: 80px; }
+        
         .btn-action { width: 100%; background: linear-gradient(45deg, #9b59b6, #8e44ad); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
         .btn-danger { background: linear-gradient(45deg, #c0392b, #e74c3c); }
@@ -37,7 +39,7 @@
         <a href="vip.html">Área VIP ⭐</a>
         <a href="exclusivo.html">Exclusivo 👑</a>
         <a href="planos.html">Planos 🪙</a>
-        <a href="admin.html" class="active">Painel Admin ⚙️</a>
+        <a href="admin.html" class="active">Admin ⚙️</a>
     </div>
 
     <div id="mensagem-bloqueio">
@@ -46,16 +48,30 @@
 
     <div class="card-container" id="painel-admin-conteudo" style="display: none;">
         <h2>⚙️ Gestão Administrativa</h2>
-        <p class="subtitle">Bem-vindo, Walyson. Controlo total do sistema.</p>
+        <p class="subtitle">Bem-vindo, Fundador Walyson.</p>
         
-        <div style="text-align: left; margin-bottom: 15px;">
-            <label style="font-size: 0.8rem; color: #d1b3ff; display: block; margin-bottom: 5px;">Conceder VIP Grátis por E-mail:</label>
+        <!-- Criar Comunicado com Seletor de Página -->
+        <div style="text-align: left; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+            <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">📢 Criar Comunicado / Post Oficial:</label>
+            <select id="admin-target-page" class="input-field">
+                <option value="comum">Feed Comum (Fila)</option>
+                <option value="vip">Área VIP ⭐</option>
+                <option value="exclusivo">Exclusivo 👑 (Realeza)</option>
+            </select>
+            <input type="text" id="admin-comunicado-link" class="input-field" placeholder="Link de mídia/Instagram (Opcional)">
+            <textarea id="admin-comunicado-text" class="input-field" maxlength="3000" placeholder="Escreva o comunicado detalhado (até 3000 caracteres)..."></textarea>
+            <button class="btn-action" onclick="publicarComunicadoAdmin()">Publicar Comunicado</button>
+        </div>
+
+        <!-- Dar VIP Grátis -->
+        <div style="text-align: left; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+            <label style="font-size: 0.85rem; color: #e056fd; display: block; margin-bottom: 8px; font-weight: bold;">⭐ Conceder VIP Grátis:</label>
             <input type="text" id="admin-target-email" class="input-field" placeholder="emaildousuario@gmail.com">
             <button class="btn-action" onclick="concederVipGratis()">Dar VIP a Utilizador</button>
         </div>
 
         <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
-        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed</button>
+        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed Comum</button>
     </div>
 
     <script>
@@ -74,11 +90,38 @@
             }
         };
 
+        function publicarComunicadoAdmin() {
+            let pagina = document.getElementById('admin-target-page').value;
+            let link = document.getElementById('admin-comunicado-link').value.trim();
+            let texto = document.getElementById('admin-comunicado-text').value.trim();
+
+            if (!texto && !link) { alert('Escreva uma mensagem ou adicione um link.'); return; }
+
+            let autor = 'Fundador 👑 [Oficial]';
+            if (pagina === 'vip') autor = 'Fundador ⭐ [VIP Oficial]';
+            if (pagina === 'exclusivo') autor = 'Fundador 👑 [Realeza Oficial]';
+
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            posts.unshift({
+                id: Date.now(),
+                section: pagina,
+                autor: autor,
+                texto: texto || 'Comunicado Oficial',
+                link: link,
+                impulses: 0
+            });
+
+            localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
+            document.getElementById('admin-comunicado-link').value = '';
+            document.getElementById('admin-comunicado-text').value = '';
+            alert(`Comunicado publicado com sucesso na secção: ${pagina.toUpperCase()}!`);
+        }
+
         function concederVipGratis() {
             let target = document.getElementById('admin-target-email').value.trim();
             if (!target) { alert('Insira um e-mail válido.'); return; }
             localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert(`O plano VIP/Realeza foi concedido com sucesso para o e-mail: ${target}`);
+            alert(`O plano VIP/Realeza foi concedido com sucesso para: ${target}`);
             document.getElementById('admin-target-email').value = '';
         }
 
