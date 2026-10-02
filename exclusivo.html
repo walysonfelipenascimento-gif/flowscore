@@ -8,12 +8,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #090614; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .header-nav {
-            width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
-        }
-        .header-nav a {
-            color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s;
-        }
+        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
         .header-nav a.active { border-color: #9b59b6; background: rgba(155, 89, 182, 0.2); font-weight: bold; }
 
         .card-container {
@@ -26,15 +22,13 @@
         h2 { font-size: 1.6rem; margin-bottom: 5px; background: linear-gradient(45deg, #e056fd, #9b59b6, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 15px; }
 
-        .royal-post {
-            background: #110c1f; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left;
-        }
-        .royal-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(155, 89, 182, 0.05); }
-        .royal-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(45deg, #9b59b6, #f1c40f); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
-        .royal-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
-        .royal-user-sub { font-size: 0.7rem; color: #e056fd; }
-        .royal-content-box { width: 100%; background: #000; min-height: 220px; display: flex; align-items: center; justify-content: center; padding: 15px; text-align: center; }
-        .royal-body { padding: 12px; font-size: 0.8rem; color: #ccc; }
+        .post-card { background: #110c1f; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left; }
+        .post-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(155, 89, 182, 0.05); }
+        .post-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(45deg, #9b59b6, #f1c40f); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
+        .post-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
+        .post-user-sub { font-size: 0.7rem; color: #e056fd; }
+        .post-content { padding: 15px; font-size: 0.85rem; color: #e2d9f3; line-height: 1.4; word-break: break-word; }
+        .post-link { display: block; padding: 12px; background: rgba(0,0,0,0.4); color: #e056fd; text-decoration: none; font-size: 0.8rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -48,31 +42,51 @@
 
     <div class="card-container">
         <h2>Canal Imperial do Criador</h2>
-        <p class="subtitle">Publicações e vídeos solenes em estilo de postagem oficial da realeza.</p>
+        <p class="subtitle">Conteúdos solenes e publicações oficiais em estilo de realeza.</p>
     </div>
 
-    <div style="max-width: 500px; width: 100%;" id="royal-timeline">
-        <div class="royal-post">
-            <div class="royal-header">
-                <div class="royal-avatar">👑</div>
-                <div>
-                    <div class="royal-user-info">Fundador Walyson</div>
-                    <div class="royal-user-sub">Pronunciamento Oficial / Vídeo em Destaque</div>
-                </div>
-            </div>
-            <div class="royal-content-box">
-                <div>
-                    <p style="font-size: 0.85rem; color: #f1c40f; margin-bottom: 8px;">✨ Post Imperial de Lançamento</p>
-                    <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" style="color: #e056fd; font-size: 0.85rem; word-break: break-all;">Aceder ao Post Oficial do Criador</a>
-                </div>
-            </div>
-            <div class="royal-body">Bem-vindos ao núcleo de comando supremo. Conteúdo exclusivo da liderança.</div>
-        </div>
-    </div>
+    <div style="max-width: 500px; width: 100%;" id="royal-timeline"></div>
 
     <script>
         window.onload = function() {
             if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
+
+            const timeline = document.getElementById('royal-timeline');
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            let royalPosts = posts.filter(p => p.section === 'exclusivo');
+
+            if (royalPosts.length === 0) {
+                // Conteúdo padrão inicial imperial caso não haja posts criados ainda
+                timeline.innerHTML = `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">👑</div>
+                            <div>
+                                <div class="post-user-info">Fundador Walyson</div>
+                                <div class="post-user-sub">Pronunciamento Imperial</div>
+                            </div>
+                        </div>
+                        <div class="post-content">Bem-vindos ao núcleo de comando supremo. Conteúdo exclusivo da liderança e publicações de alto padrão.</div>
+                        <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" class="post-link">✨ Aceder ao Post Oficial do Instagram</a>
+                    </div>`;
+                return;
+            }
+
+            timeline.innerHTML = '';
+            royalPosts.forEach(p => {
+                timeline.innerHTML += `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">👑</div>
+                            <div>
+                                <div class="post-user-info">${p.autor || 'Fundador'}</div>
+                                <div class="post-user-sub">Realeza & Exclusividades</div>
+                            </div>
+                        </div>
+                        <div class="post-content">${p.texto}</div>
+                        ${p.link ? `<a href="${p.link}" target="_blank" class="post-link">✨ Aceder à Mídia / Post Oficial</a>` : ''}
+                    </div>`;
+            });
         };
     </script>
 </body>
