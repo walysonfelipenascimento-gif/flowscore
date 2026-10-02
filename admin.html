@@ -3,38 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Planos & Moedas</title>
+    <title>FlowScore - Painel Administrativo</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
         .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
         .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .header-nav a.active { border-color: #f39c12; background: rgba(243, 156, 18, 0.15); font-weight: bold; }
+        .header-nav a:hover { background: rgba(255, 255, 255, 0.1); }
 
         .card-container {
             background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
-            border: 1px solid rgba(243, 156, 18, 0.4);
+            border: 2px solid #9b59b6;
             border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(243, 156, 18, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(155, 89, 182, 0.3);
             margin-bottom: 20px; text-align: center;
         }
-        h2 { font-size: 1.5rem; margin-bottom: 8px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
+        h2 { font-size: 1.5rem; margin-bottom: 8px; color: #e056fd; }
+        p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 20px; }
 
-        .coins-display { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 10px; }
-        
-        .plan-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 16px; padding: 16px; margin-bottom: 15px; text-align: left; }
-        .plan-box h3 { font-size: 1rem; color: #f39c12; margin-bottom: 6px; }
-        .plan-box p { font-size: 0.78rem; color: #ccc; margin-bottom: 12px; }
-
-        .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #9b59b6, #8e44ad); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-bottom: 12px; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
+        .btn-danger { background: linear-gradient(45deg, #c0392b, #e74c3c); }
 
-        /* Painel exclusivo do Admin */
-        .admin-panel { background: #1b1230; border: 2px dashed #9b59b6; border-radius: 16px; padding: 16px; margin-top: 20px; display: none; text-align: left; }
-        .admin-panel h3 { color: #e056fd; font-size: 1rem; margin-bottom: 8px; }
-        .admin-panel p { font-size: 0.78rem; color: #d1b3ff; margin-bottom: 10px; }
+        #mensagem-bloqueio { color: #e74c3c; font-weight: bold; font-size: 0.9rem; padding: 20px; text-align: center; display: none; }
     </style>
 </head>
 <body>
@@ -43,69 +35,45 @@
         <a href="comum.html">Feed Fila</a>
         <a href="vip.html">Área VIP ⭐</a>
         <a href="exclusivo.html">Exclusivo 👑</a>
-        <a href="planos.html" class="active">Planos & Moedas 🪙</a>
+        <a href="planos.html">Planos 🪙</a>
     </div>
 
-    <div class="card-container">
-        <h2>Painel de Planos & Moedas</h2>
-        <p class="subtitle">Gerencie seu saldo e desbloqueie acessos especiais.</p>
-        <div class="coins-display">🪙 Suas Moedas: <span id="user-coins">0</span></div>
-        <button class="btn-action" onclick="coletarMoedasDiarias()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Resgatar Moedas Diárias (+10 🪙)</button>
+    <div id="mensagem-bloqueio">
+        Acesso restrito! Apenas o Administrador pode visualizar este painel.
     </div>
 
-    <div class="card-container">
-        <div class="plan-box">
-            <h3>⭐ Plano VIP / Realeza</h3>
-            <p>Desbloqueia a permissão de publicação nas áreas VIP e Exclusiva, além de acesso total aos canais.</p>
-            <button class="btn-action" onclick="ativarPlanoVip()">Ativar Plano VIP (Grátis para testes)</button>
-        </div>
-    </div>
-
-    <!-- Painel de Controlo do Administrador -->
-    <div class="card-container admin-panel" id="admin-master-panel">
-        <h3>👑 Painel Master do Administrador</h3>
-        <p>Logado como Fundador. Você possui privilégios totais de moderação e publicação em todas as páginas.</p>
-        <button class="btn-action" onclick="resetarDadosGerais()" style="background: linear-gradient(45deg, #c0392b, #e74c3c);">Limpar / Resetar Todos os Posts</button>
+    <div class="card-container" id="painel-admin-conteudo" style="display: none;">
+        <h2>⚙️ Gestão Administrativa</h2>
+        <p class="subtitle">Bem-vindo, Walyson. Painel de controlo geral do sistema.</p>
+        
+        <button class="btn-action" onclick="gerenciarUsuarios()">Verificar Estatísticas do Sistema</button>
+        <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
+        <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed</button>
     </div>
 
     <script>
         window.onload = function() {
             let email = localStorage.getItem('flowscore_email');
-            if (!email) { window.location.href = 'index.html'; return; }
-
-            // Carregar moedas atuais
-            let moedas = localStorage.getItem('flowscore_coins');
-            if (moedas === null) {
-                moedas = 20; // Bônus inicial
-                localStorage.setItem('flowscore_coins', moedas);
-            }
-            document.getElementById('user-coins').innerText = moedas;
-
-            // Verificação do Admin
-            if (email === 'onlyzlicinhoszbb@gmail.com') {
-                document.getElementById('admin-master-panel').style.display = 'block';
-                // Garante que o Admin tem sempre o VIP/Realeza ativo por predefinição
-                localStorage.setItem('flowscore_vip_ativo', 'true');
+            
+            // Validação simples e direta do e-mail do admin
+            if (email && email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') {
+                document.getElementById('painel-admin-conteudo').style.display = 'block';
+                document.getElementById('mensagem-bloqueio').style.display = 'none';
+            } else {
+                document.getElementById('painel-admin-conteudo').style.display = 'none';
+                document.getElementById('mensagem-bloqueio').style.display = 'block';
             }
         };
 
-        function coletarMoedasDiarias() {
-            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
-            moedas += 10;
-            localStorage.setItem('flowscore_coins', moedas);
-            document.getElementById('user-coins').innerText = moedas;
-            alert('Você resgatou 10 moedas com sucesso!');
+        function gerenciarUsuarios() {
+            alert('Sistema a operar normalmente. Utilizador atual reconhecido como Administrador Master.');
         }
 
-        function ativarPlanoVip() {
-            localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert('Plano VIP / Realeza ativado com sucesso! Agora já podes publicar nas abas VIP e Exclusiva.');
-        }
-
-        function resetarDadosGerais() {
-            if (confirm('Tens certeza que queres apagar todos os posts globais?')) {
-                localStorage.removeItem('flowscore_all_posts');
-                alert('Todos os posts foram limpos com sucesso!');
+        function limparBancoLocal() {
+            if (confirm('Tens certeza absoluta que queres limpar todos os dados salvos no navegador?')) {
+                localStorage.clear();
+                alert('Dados limpos com sucesso. Redirecionando...');
+                window.location.href = 'index.html';
             }
         }
     </script>
