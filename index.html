@@ -3,91 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Plataforma de Engajamento</title>
+    <title>FlowScore - Início e Fundador</title>
     <style>
-        /* Estilo Mar de Cores - Degradê Neon */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
         body { 
             background: #0f0c20; 
             color: #fff; 
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-
         .card-container {
             background: linear-gradient(135deg, #19152e 0%, #141126 100%);
             border: 1px solid rgba(193, 53, 132, 0.3);
             border-radius: 20px;
-            padding: 40px 20px;
-            text-align: center;
-            max-width: 500px;
+            padding: 30px 20px;
+            max-width: 420px;
             width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
+            text-align: center;
         }
-
-        h1 { 
-            font-size: 2.8rem; 
+        h2 { 
+            font-size: 2rem; 
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff3399, #c13584, #833ab4, #38ef7d);
+            background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        p { color: #aaa; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
+        
+        .step-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .step-box h4 { font-size: 0.85rem; color: #ff3399; margin-bottom: 5px; }
 
-        p { color: #b3b3b3; margin-bottom: 30px; font-size: 0.95rem; }
-
-        .btn-container { 
-            display: flex; 
-            flex-direction: column;
-            gap: 12px; 
+        .input-field {
             width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        .input-field:focus { border-color: #ff3399; }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #ddd;
+            margin-bottom: 15px;
+            cursor: pointer;
+            text-align: left;
         }
 
         .btn { 
-            background: rgba(255, 255, 255, 0.05); 
-            color: #fff; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            padding: 14px; 
-            border-radius: 12px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover { 
-            background: linear-gradient(45deg, #c13584, #833ab4);
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(193, 53, 132, 0.4);
-        }
-
-        .btn-primary { 
+            width: 100%;
             background: linear-gradient(45deg, #ff3399, #c13584);
+            color: #fff;
             border: none;
-            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.3);
+            padding: 12px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
-
-        .btn-primary:hover {
-            background: linear-gradient(45deg, #c13584, #e1306c);
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-admin {
+            background: linear-gradient(45deg, #833ab4, #405de6);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 <body>
 
     <div class="card-container">
-        <h1>FlowScore</h1>
-        <p>Bem-vindo à plataforma oficial de engajamento e fluxos.</p>
+        <h2>FlowScore</h2>
+        <p>Plataforma oficial de engajamento e fluxos.</p>
+        
+        <div id="form-area">
+            <div class="step-box">
+                <h4>Passo 1: Siga o Criador</h4>
+                <p style="margin-bottom: 10px;">É obrigatório seguir o perfil oficial para validar o acesso.</p>
+                <!-- Link direto para o teu Instagram -->
+                <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" class="btn" style="padding: 8px; font-size: 0.85rem; margin-bottom: 0;">Seguir @onlyz.licinhosz_bb</a>
+            </div>
 
-        <div class="btn-container">
-            <a href="login.html" class="btn btn-primary">Entrar na Conta</a>
-            <a href="cadastro.html" class="btn">Criar Nova Conta</a>
+            <div class="step-box">
+                <h4>Passo 2: Entrar na Conta</h4>
+                <input type="email" id="userEmail" class="input-field" placeholder="Digite o seu e-mail">
+                
+                <label class="checkbox-container">
+                    <input type="checkbox" id="checkSeguiu"> Confirmo que já segui o perfil.
+                </label>
+            </div>
+
+            <button class="btn" onclick="fazerLogin()">Entrar na Plataforma</button>
+        </div>
+
+        <div id="logged-area" style="display: none;">
+            <p style="color: #ff3399; font-weight: bold; margin-bottom: 15px;" id="welcome-msg"></p>
+            
+            <!-- Botões normais -->
             <a href="comum.html" class="btn">Acessar Fila Comum</a>
+            
+            <!-- Painel exclusivo de Fundador / Admin (só aparece se for o teu e-mail) -->
+            <div id="founder-panel" style="display: none; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <p style="color: #833ab4; font-weight: bold; font-size: 0.8rem; margin-bottom: 8px;">👑 ACESSO DE FUNDADOR</p>
+                <a href="admin.html" class="btn btn-admin">Painel Administrativo</a>
+            </div>
+
+            <button class="btn btn-secondary" onclick="sairConta()" style="margin-top: 10px;">Sair da Conta</button>
         </div>
     </div>
+
+    <script>
+        const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
+
+        function verificarLogin() {
+            const emailSalvo = localStorage.getItem('flowscore_email');
+            if (emailSalvo) {
+                document.getElementById('form-area').style.display = 'none';
+                document.getElementById('logged-area').style.display = 'block';
+                
+                let msg = `Conta: ${emailSalvo}`;
+                if (emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase()) {
+                    msg = `👑 Bem-vindo, Fundador Walyson!`;
+                    document.getElementById('founder-panel').style.display = 'block';
+                } else {
+                    document.getElementById('founder-panel').style.display = 'none';
+                }
+                document.getElementById('welcome-msg').innerText = msg;
+            }
+        }
+
+        function fazerLogin() {
+            const email = document.getElementById('userEmail').value.trim();
+            const seguiu = document.getElementById('checkSeguiu').checked;
+
+            if (email === '') {
+                alert('Por favor, digite o seu e-mail!');
+                return;
+            }
+
+            if (email.toLowerCase() !== EMAIL_FUNDADOR.toLowerCase() && !seguiu) {
+                alert('Você precisa confirmar que seguiu o perfil do criador antes de continuar!');
+                return;
+            }
+
+            localStorage.setItem('flowscore_email', email);
+            verificarLogin();
+        }
+
+        function sairConta() {
+            localStorage.removeItem('flowscore_email');
+            document.getElementById('form-area').style.display = 'block';
+            document.getElementById('logged-area').style.display = 'none';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('checkSeguiu').checked = false;
+        }
+
+        window.onload = verificarLogin;
+    </script>
 
 </body>
 </html>
