@@ -3,63 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Painel Exclusivo do Fundador</title>
+    <title>FlowScore - Painel do Fundador (Admin)</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #05030a; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body { background: #090614; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
         .admin-card {
-            background: linear-gradient(135deg, #1b0d26 0%, #0d0614 100%);
-            border: 1px solid rgba(255, 42, 141, 0.6);
-            border-radius: 24px; padding: 35px 25px; max-width: 400px; width: 100%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 141, 0.2);
+            background: linear-gradient(135deg, #1c102b 0%, #0d0a1a 100%);
+            border: 1px solid rgba(255, 42, 141, 0.5);
+            border-radius: 24px; padding: 30px 25px; max-width: 420px; width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 30px rgba(255, 42, 141, 0.2);
             text-align: center;
         }
 
-        .lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
-        h1 { font-size: 1.6rem; color: #ff2a8d; margin-bottom: 8px; font-weight: bold; }
-        p.subtitle { color: #b19cd9; font-size: 0.8rem; margin-bottom: 25px; line-height: 1.4; }
+        .crown-icon { font-size: 2.8rem; margin-bottom: 10px; }
+        h1 { font-size: 1.7rem; color: #ff2a8d; margin-bottom: 5px; font-weight: bold; }
+        p.subtitle { color: #aaa; font-size: 0.82rem; margin-bottom: 20px; }
 
-        .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.4); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
-        .input-field:focus { border-color: #ff2a8d; box-shadow: 0 0 10px rgba(255, 42, 141, 0.3); }
+        .auth-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 16px; padding: 18px; text-align: left; }
+        .auth-box h3 { font-size: 0.9rem; color: #ff2a8d; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        
+        .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 11px 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
+        
+        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.01); }
 
-        .btn-admin { width: 100%; background: linear-gradient(45deg, #ff2a8d, #9c27b0); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; margin-top: 5px; }
-        .btn-admin:hover { opacity: 0.9; transform: scale(1.01); }
-
-        .back-link { display: block; margin-top: 20px; color: #888; font-size: 0.75rem; text-decoration: none; transition: 0.2s; }
+        .back-link { display: block; margin-top: 15px; font-size: 0.78rem; color: #888; text-decoration: none; transition: 0.2s; }
         .back-link:hover { color: #ff2a8d; }
     </style>
 </head>
 <body>
 
-    <div class="admin-card">
-        <div class="lock-icon">🔐</div>
+    <div class="admin-card" id="login-container">
+        <div class="crown-icon">👑</div>
         <h1>Área Restrita</h1>
-        <p class="subtitle">Insira as credenciais de Fundador para aceder com privilégios totais.</p>
+        <p class="subtitle">Painel exclusivo do Fundador do FlowScore</p>
 
-        <input type="email" id="admin-email" class="input-field" value="walysonfelipenascimento@gmail.com" readonly>
-        <input type="password" id="admin-senha" class="input-field" placeholder="Palavra-passe de administrador">
+        <div class="auth-box">
+            <h3>🔒 Acesso de Administrador</h3>
+            <input type="email" id="admin-email" class="input-field" placeholder="E-mail do Fundador">
+            <input type="password" id="admin-senha" class="input-field" placeholder="Senha de Fundador">
+            <button class="btn-primary" onclick="entrarAdmin()">Entrar no Painel</button>
+        </div>
 
-        <button class="btn-admin" onclick="validarFundador()">Desbloquear Painel</button>
+        <a href="index.html" class="back-link">← Voltar para a página de membros</a>
+    </div>
 
-        <a href="index.html" class="back-link">← Voltar para a página pública</a>
+    <!-- PAINEL DE CONTROLO DO ADMIN (Oculto até fazer login) -->
+    <div class="admin-card" id="panel-container" style="display: none; text-align: left;">
+        <div style="text-align: center; margin-bottom: 15px;">
+            <div class="crown-icon">👑</div>
+            <h1>Painel do Fundador</h1>
+            <p class="subtitle">Controlo total do FlowScore</p>
+        </div>
+
+        <div class="auth-box" style="margin-bottom: 15px;">
+            <h3 style="color: #ff2a8d; margin-bottom: 8px;">📊 Gestão Geral</h3>
+            <p style="font-size: 0.82rem; color: #ccc; margin-bottom: 10px;">Tens controlo total sobre os membros, cargos e sistema de pontuação.</p>
+            <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c; margin-bottom: 8px;">🗑️ Reiniciar Dados do Sistema</button>
+            <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão Admin</button>
+        </div>
+
+        <a href="index.html" class="back-link" style="text-align: center; display: block;">Ir para a página principal</a>
     </div>
 
     <script>
-        const SENHA_CORRETA_FUNDADOR = "74199024";
+        const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
+        const SENHA_FUNDADOR = "74199024";
 
-        function validarFundador() {
-            let senha = document.getElementById('admin-senha').value;
-
-            if (senha !== SENHA_CORRETA_FUNDADOR) {
-                alert('E-mail ou palavra-passe de administrador incorretos!');
-                return;
+        // Verifica se já está logado como admin nesta sessão
+        window.onload = function() {
+            if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
+                mostrarPainel();
             }
+        };
 
-            // Define a sessão de administrador e entra no feed com acesso total
-            sessionStorage.setItem('flowscore_admin_logado', 'true');
-            localStorage.setItem('flowscore_email', 'walysonfelipenascimento@gmail.com');
-            window.location.href = 'comum.html';
+        function entrarAdmin() {
+            let emailInput = document.getElementById('admin-email').value.trim().toLowerCase();
+            let senhaInput = document.getElementById('admin-senha').value;
+
+            if (emailInput === EMAIL_FUNDADOR && senhaInput === SENHA_FUNDADOR) {
+                sessionStorage.setItem('flowscore_admin_logado', 'true');
+                localStorage.setItem('flowscore_email', EMAIL_FUNDADOR);
+                mostrarPainel();
+            } else {
+                alert('⚠️ Acesso Negado! E-mail ou Senha de Fundador incorretos.');
+            }
+        }
+
+        function mostrarPainel() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('panel-container').style.display = 'block';
+        }
+
+        function sairAdmin() {
+            sessionStorage.removeItem('flowscore_admin_logado');
+            localStorage.removeItem('flowscore_email');
+            window.location.reload();
+        }
+
+        function limparDadosSistema() {
+            if (confirm('Tens a certeza que queres limpar todos os dados locais do sistema?')) {
+                localStorage.clear();
+                alert('Dados limpos com sucesso!');
+                window.location.reload();
+            }
         }
     </script>
 </body>
