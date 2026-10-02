@@ -10,7 +10,7 @@
 
         .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
         .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .header-nav a:hover { background: rgba(255, 255, 255, 0.1); }
+        .header-nav a.active { border-color: #9b59b6; background: rgba(155, 89, 182, 0.15); font-weight: bold; }
 
         .card-container {
             background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
@@ -36,6 +36,7 @@
         <a href="vip.html">Área VIP ⭐</a>
         <a href="exclusivo.html">Exclusivo 👑</a>
         <a href="planos.html">Planos 🪙</a>
+        <a href="admin.html" class="active">Painel Admin ⚙️</a>
     </div>
 
     <div id="mensagem-bloqueio">
@@ -44,9 +45,9 @@
 
     <div class="card-container" id="painel-admin-conteudo" style="display: none;">
         <h2>⚙️ Gestão Administrativa</h2>
-        <p class="subtitle">Bem-vindo, Walyson. Painel de controlo geral do sistema.</p>
+        <p class="subtitle">Bem-vindo, Walyson. Controlo total do sistema.</p>
         
-        <button class="btn-action" onclick="gerenciarUsuarios()">Verificar Estatísticas do Sistema</button>
+        <button class="btn-action" onclick="liberarTudoVip()">Forçar VIP Ativo para Testes Globais</button>
         <button class="btn-action btn-danger" onclick="limparBancoLocal()">Apagar Todos os Dados Locais</button>
         <button class="btn-action" onclick="window.location.href='comum.html'" style="background: rgba(255,255,255,0.1);">Voltar ao Feed</button>
     </div>
@@ -54,25 +55,29 @@
     <script>
         window.onload = function() {
             let email = localStorage.getItem('flowscore_email');
+            if (!email) { email = 'walysonfelipenascimento@gmail.com'; localStorage.setItem('flowscore_email', email); }
+
+            let isAdmin = email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com';
             
-            // Validação simples e direta do e-mail do admin
-            if (email && email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') {
+            if (isAdmin) {
                 document.getElementById('painel-admin-conteudo').style.display = 'block';
                 document.getElementById('mensagem-bloqueio').style.display = 'none';
+                localStorage.setItem('flowscore_vip_ativo', 'true');
             } else {
                 document.getElementById('painel-admin-conteudo').style.display = 'none';
                 document.getElementById('mensagem-bloqueio').style.display = 'block';
             }
         };
 
-        function gerenciarUsuarios() {
-            alert('Sistema a operar normalmente. Utilizador atual reconhecido como Administrador Master.');
+        function liberarTudoVip() {
+            localStorage.setItem('flowscore_vip_ativo', 'true');
+            alert('Status VIP/Realeza ativado com sucesso para este navegador!');
         }
 
         function limparBancoLocal() {
-            if (confirm('Tens certeza absoluta que queres limpar todos os dados salvos no navegador?')) {
+            if (confirm('Tens certeza absoluta que queres limpar todos os dados salvos?')) {
                 localStorage.clear();
-                alert('Dados limpos com sucesso. Redirecionando...');
+                alert('Dados limpos com sucesso.');
                 window.location.href = 'index.html';
             }
         }
