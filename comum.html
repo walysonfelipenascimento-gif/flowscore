@@ -3,328 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Feed Estilo Instagram</title>
+    <title>FlowScore - Feed de Divulgação</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { 
-            background: #0f0c20; 
-            color: #fff; 
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        body { background: #090614; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .header-nav {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .header-nav a {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
-        }
-
-        .header-nav a.active {
-            border-color: #ff3399;
-            background: rgba(255, 51, 153, 0.15);
-            font-weight: bold;
-        }
+        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 12px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
+        .header-nav a.active { border-color: #ff2a8d; background: rgba(255, 42, 141, 0.15); font-weight: bold; }
 
         .card-container {
-            background: linear-gradient(135deg, #19152e 0%, #141126 100%);
-            border: 1px solid rgba(193, 53, 132, 0.3);
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #16102a 0%, #0d0a1a 100%);
+            border: 1px solid rgba(255, 42, 141, 0.3);
+            border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 42, 141, 0.1);
+            margin-bottom: 20px; text-align: center;
         }
+        h2 { font-size: 1.5rem; margin-bottom: 5px; color: #ff2a8d; }
+        p.subtitle { color: #aaa; font-size: 0.78rem; margin-bottom: 15px; }
 
-        h2 { 
-            font-size: 1.6rem; 
-            margin-bottom: 5px;
-            background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .status-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.2); border-radius: 14px; padding: 12px; text-align: center; }
+        .status-box span { font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 4px; }
+        .status-box strong { font-size: 1rem; color: #ff2a8d; }
 
-        p.subtitle { text-align: center; color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
+        /* Caixa de publicação fiel ao design original + suporte a texto longo */
+        .publish-box { background: #16102a; border: 1px solid #ff2a8d; border-radius: 16px; padding: 18px; max-width: 500px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left; }
+        .publish-box h3 { font-size: 1rem; color: #ff2a8d; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.8rem; margin-bottom: 10px; outline: none; }
+        textarea.input-field { resize: vertical; min-height: 80px; }
+        .btn-publicar { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+        /* Cartões de posts no estilo exato da imagem */
+        .post-card { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.4); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); max-width: 500px; width: 100%; text-align: left; }
+        .post-header { display: flex; align-items: center; padding: 14px 16px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .post-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(45deg, #ff2a8d, #f1c40f); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.95rem; color: #fff; }
+        .post-user-info { font-size: 0.88rem; color: #fff; font-weight: bold; }
+        .post-user-sub { font-size: 0.75rem; color: #aaa; margin-top: 2px; }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-        }
+        .media-box { background: #000; padding: 25px 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .media-box p { font-size: 0.85rem; color: #ccc; margin-bottom: 6px; }
+        .media-box a { font-size: 0.78rem; color: #ff2a8d; text-decoration: underline; word-break: break-all; }
 
-        .stat-card h3 { font-size: 0.75rem; color: #aaa; margin-bottom: 4px; }
-        .stat-value { font-size: 1.2rem; font-weight: bold; color: #ff3399; }
+        .post-text-content { padding: 15px 16px; font-size: 0.85rem; color: #e2d9f3; line-height: 1.4; word-break: break-word; white-space: pre-wrap; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        .form-group { margin-bottom: 10px; text-align: left; }
-        label { display: block; font-size: 0.8rem; color: #ddd; margin-bottom: 4px; }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            outline: none;
-            font-size: 0.85rem;
-        }
-        input:focus { border-color: #ff3399; }
-
-        .btn-action { 
-            width: 100%;
-            background: linear-gradient(45deg, #ff3399, #c13584);
-            color: #fff;
-            border: none;
-            padding: 10px; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            text-align: center;
-        }
-        .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        /* Estilo do Feed Estilo Instagram */
-        .insta-post-card {
-            background: #141126;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .insta-post-card.vip-feed {
-            border-color: #ff3399;
-            box-shadow: 0 0 15px rgba(255, 51, 153, 0.2);
-        }
-        .insta-header {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .insta-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-        .insta-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
-        .insta-user-sub { font-size: 0.7rem; color: #888; }
-
-        .insta-embed-container {
-            width: 100%;
-            background: #000;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .insta-body {
-            padding: 12px;
-        }
-        .insta-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.8rem;
-            color: #aaa;
-        }
-        .boost-btn {
-            background: rgba(255, 51, 153, 0.2);
-            border: 1px solid #ff3399;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        .boost-btn:hover { background: rgba(255, 51, 153, 0.4); }
+        .post-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(0,0,0,0.2); }
+        .post-impulses { font-size: 0.8rem; color: #aaa; }
+        .btn-turbinar { background: transparent; border: 1px solid #ff2a8d; color: #ff2a8d; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-turbinar:hover { background: rgba(255, 42, 141, 0.15); }
     </style>
 </head>
 <body>
 
     <div class="header-nav">
         <a href="comum.html" class="active">Feed Fila</a>
-        <a href="vip.html">Área VIP</a>
-        <a href="exclusivo.html">Exclusivo</a>
-        <a href="admin.html" id="nav-admin" style="display: none;">Admin</a>
+        <a href="vip.html">Área VIP ⭐</a>
+        <a href="exclusivo.html">Exclusivo 👑</a>
+        <a href="planos.html">Planos 🪙</a>
+        <a href="admin.html" id="nav-admin-link" style="display:none; border-color:#9b59b6; color:#e056fd;">Admin ⚙️</a>
     </div>
 
     <div class="card-container">
         <h2>Feed de Divulgação</h2>
-        <p class="subtitle" id="user-greeting">Cole o link do seu post do Instagram para receber críticas e engajamento.</p>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Suas Moedas</h3>
-                <div class="stat-value" id="user-coins">🪙 15</div>
+        <p class="subtitle">Sessão: <span id="user-session-name">Fundador Walyson</span></p>
+        
+        <div class="status-grid">
+            <div class="status-box">
+                <span>Suas Moedas</span>
+                <strong id="user-coins">30 🪙</strong>
             </div>
-            <div class="stat-card">
-                <h3>Seu Status</h3>
-                <div class="stat-value" id="user-tier" style="font-size: 1rem; margin-top: 4px;">Comum</div>
+            <div class="status-box">
+                <span>Seu Status</span>
+                <strong id="user-status-text">👑 Fundador</strong>
             </div>
         </div>
     </div>
 
-    <!-- Enviar Link do Instagram -->
-    <div class="card-container">
-        <h3 style="font-size: 1rem; color: #ff3399; margin-bottom: 10px;">📸 Adicionar Post do Instagram</h3>
-        
-        <div class="form-group">
-            <label>Link Direto da Publicação (Ex: https://www.instagram.com/p/...)</label>
-            <input type="text" id="instaLink" placeholder="Cole o link do post aqui">
-        </div>
-        
-        <button class="btn-action" onclick="adicionarPostInsta()">Publicar no Feed</button>
+    <!-- Caixa de publicação idêntica à foto de referência -->
+    <div class="publish-box">
+        <h3>📸 Adicionar Post do Instagram</h3>
+        <input type="text" id="comum-link" class="input-field" placeholder="Cole o link do post aqui (Ex: https://www.instagram.com/p/...)">
+        <textarea id="comum-text" class="input-field" maxlength="3000" placeholder="Escreva uma legenda ou mensagem (até 3000 caracteres)..."></textarea>
+        <button class="btn-publicar" onclick="publicarComum()">Publicar no Feed</button>
     </div>
 
-    <!-- Feed Estilo Rolagem (Timeline) -->
-    <div style="max-width: 500px; width: 100%;" id="feed-timeline">
-        <!-- Os posts em formato de feed aparecem aqui -->
-    </div>
+    <div style="max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center;" id="comum-timeline"></div>
 
     <script>
-        const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
-
-        let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
-        let postsInsta = JSON.parse(localStorage.getItem('flowscore_insta_posts')) || [
-            { link: "https://www.instagram.com/", autor: "Fundador", vip: true, impulsionado: 3 }
-        ];
-
         window.onload = function() {
-            const emailSalvo = localStorage.getItem('flowscore_email');
-            if (!emailSalvo) {
-                window.location.href = 'index.html';
-                return;
+            let email = localStorage.getItem('flowscore_email');
+            if (!email) { email = 'walysonfelipenascimento@gmail.com'; localStorage.setItem('flowscore_email', email); }
+
+            let moedas = localStorage.getItem('flowscore_coins');
+            if (moedas === null) { moedas = 30; localStorage.setItem('flowscore_coins', moedas); }
+            document.getElementById('user-coins').innerText = moedas + ' 🪙';
+
+            let isAdmin = email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com';
+            if (isAdmin) {
+                document.getElementById('nav-admin-link').style.display = 'inline-block';
             }
 
-            const greeting = document.getElementById('user-greeting');
-            if (emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase()) {
-                greeting.innerText = `Sessão: Fundador Walyson`;
-                document.getElementById('nav-admin').style.display = 'inline-block';
-                document.getElementById('user-tier').innerText = '👑 Fundador';
-            } else {
-                greeting.innerText = `Sessão: ${emailSalvo}`;
-            }
-
-            atualizarFeed();
+            carregarPostsComum();
         };
 
-        function atualizarFeed() {
-            document.getElementById('user-coins').innerText = `🪙 ${moedas}`;
-            localStorage.setItem('flowscore_coins', moedas);
-            localStorage.setItem('flowscore_insta_posts', JSON.stringify(postsInsta));
+        function publicarComum() {
+            let link = document.getElementById('comum-link').value.trim();
+            let texto = document.getElementById('comum-text').value.trim();
+            let email = localStorage.getItem('flowscore_email');
+            let isAdmin = email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com';
+            let autor = isAdmin ? 'Fundador 👑 [VIP]' : 'Membro';
 
-            const timeline = document.getElementById('feed-timeline');
-            timeline.innerHTML = '';
+            if (!texto && !link) { alert('Insira pelo menos o link do Instagram ou uma mensagem.'); return; }
 
-            // Ordenar por VIP e impulsos
-            postsInsta.sort((a, b) => (b.vip - a.vip) || (b.impulsionado - a.impulsionado));
-
-            postsInsta.forEach((p, index) => {
-                const div = document.createElement('div');
-                div.className = `insta-post-card ${p.vip ? 'vip-feed' : ''}`;
-                
-                // Formatar link limpo para exibição ou iframe caso seja válido
-                div.innerHTML = `
-                    <div class="insta-header">
-                        <div class="insta-avatar">${p.autor.charAt(0).toUpperCase()}</div>
-                        <div>
-                            <div class="insta-user-info">${p.autor} ${p.vip ? '⭐ [VIP]' : ''}</div>
-                            <div class="insta-user-sub">Post para avaliação e críticas</div>
-                        </div>
-                    </div>
-                    <div class="insta-embed-container">
-                        <div style="text-align: center; padding: 20px;">
-                            <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 10px;">Publicação vinculada do Instagram</p>
-                            <a href="${p.link}" target="_blank" style="color: #ff3399; font-size: 0.85rem; word-break: break-all;">${p.link}</a>
-                        </div>
-                    </div>
-                    <div class="insta-body">
-                        <div class="insta-actions">
-                            <span>🚀 ${p.impulsionado} impulsos</span>
-                            <button class="boost-btn" onclick="turbinarFeed(${index})">Turbinar (-5 🪙)</button>
-                        </div>
-                    </div>
-                `;
-                timeline.appendChild(div);
-            });
-        }
-
-        function adicionarPostInsta() {
-            const link = document.getElementById('instaLink').value.trim();
-            const emailSalvo = localStorage.getItem('flowscore_email');
-
-            if (!link || !link.includes('instagram.com')) {
-                alert('Por favor, insira um link válido do Instagram!');
-                return;
-            }
-
-            const isVip = emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase();
-
-            postsInsta.unshift({
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            posts.unshift({
+                id: Date.now(),
+                section: 'comum',
+                autor: autor,
+                texto: texto || 'Post para avaliação e críticas',
                 link: link,
-                autor: emailSalvo.split('@')[0],
-                vip: isVip,
-                impulsionado: 0
+                impulses: 0
             });
 
-            document.getElementById('instaLink').value = '';
-            atualizarFeed();
-            alert('Post adicionado ao feed com sucesso para receber interações!');
+            localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
+            document.getElementById('comum-link').value = '';
+            document.getElementById('comum-text').value = '';
+            carregarPostsComum();
+            alert('Publicação efetuada com sucesso!');
         }
 
-        function turbinarFeed(index) {
-            if (moedas < 5) {
-                alert('Você não tem moedas suficientes para turbinar este post!');
+        function carregarPostsComum() {
+            const timeline = document.getElementById('comum-timeline');
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            let comumPosts = posts.filter(p => !p.section || p.section === 'comum');
+
+            if (comumPosts.length === 0) {
+                timeline.innerHTML = `<div class="card-container"><p style="color:#aaa;">Nenhuma publicação no feed comum no momento.</p></div>`;
                 return;
             }
+
+            timeline.innerHTML = '';
+            comumPosts.forEach((p) => {
+                let avatarLetra = p.autor ? p.autor.charAt(0) : 'F';
+                timeline.innerHTML += `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">${avatarLetra}</div>
+                            <div>
+                                <div class="post-user-info">${p.autor}</div>
+                                <div class="post-user-sub">${p.texto ? p.texto.substring(0, 45) + (p.texto.length > 45 ? '...' : '') : 'Post para avaliação e críticas'}</div>
+                            </div>
+                        </div>
+                        ${p.link ? `
+                        <div class="media-box">
+                            <p>Publicação vinculada do Instagram</p>
+                            <a href="${p.link}" target="_blank">${p.link}</a>
+                        </div>` : ''}
+                        ${p.texto && p.link ? `<div class="post-text-content">${p.texto}</div>` : ''}
+                        <div class="post-footer">
+                            <span class="post-impulses">🚀 ${p.impulses || 0} impulsos</span>
+                            <button class="btn-turbinar" onclick="turbinarComum(${p.id})">Turbinar (-5 🪙)</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function turbinarComum(id) {
+            let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
+            if (moedas < 5) { alert('Moedas insuficientes!'); return; }
             moedas -= 5;
-            postsInsta[index].impulsionado += 1;
-            atualizarFeed();
-            alert('Post turbinado com sucesso! Subiu no feed.');
+            localStorage.setItem('flowscore_coins', moedas);
+            document.getElementById('user-coins').innerText = moedas + ' 🪙';
+
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            let post = posts.find(p => p.id === id);
+            if (post) {
+                post.impulses = (post.impulses || 0) + 1;
+                localStorage.setItem('flowscore_all_posts', JSON.stringify(posts));
+                carregarPostsComum();
+                alert('Post impulsionado com sucesso!');
+            }
         }
     </script>
-
 </body>
 </html>
