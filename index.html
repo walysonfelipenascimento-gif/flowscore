@@ -3,186 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Início e Fundador</title>
+    <title>FlowScore - O Império das Comunidades</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { 
-            background: #0f0c20; 
-            color: #fff; 
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .card-container {
-            background: linear-gradient(135deg, #19152e 0%, #141126 100%);
-            border: 1px solid rgba(193, 53, 132, 0.3);
-            border-radius: 20px;
-            padding: 30px 20px;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
+        body { background: #090614; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #16102a 0%, #0d0a1a 100%);
+            border: 1px solid rgba(255, 42, 141, 0.4);
+            border-radius: 24px; padding: 30px 25px; max-width: 420px; width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(255, 42, 141, 0.15);
             text-align: center;
         }
-        h2 { 
-            font-size: 2rem; 
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .crown-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        h1 { font-size: 1.8rem; color: #ff2a8d; margin-bottom: 8px; font-weight: bold; }
+        p.subtitle { color: #aaa; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
+
+        /* Alerta de obrigatoriedade do Instagram */
+        .insta-banner {
+            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
+            border-radius: 12px; padding: 12px; margin-bottom: 20px; text-decoration: none; color: #fff; display: block; font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(253, 29, 29, 0.3); transition: 0.3s;
         }
-        p { color: #aaa; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
+        .insta-banner:hover { opacity: 0.9; transform: scale(1.02); }
+
+        .auth-box { background: #110d21; border: 1px solid rgba(255, 42, 141, 0.2); border-radius: 16px; padding: 18px; margin-bottom: 15px; text-align: left; }
+        .auth-box h3 { font-size: 0.9rem; color: #ff2a8d; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
-        .step-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .step-box h4 { font-size: 0.85rem; color: #ff3399; margin-bottom: 5px; }
-
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            outline: none;
-            font-size: 0.9rem;
-        }
-        .input-field:focus { border-color: #ff3399; }
-
+        .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 10px 12px; color: #fff; font-size: 0.85rem; margin-bottom: 10px; outline: none; }
+        
+        /* Estilo da caixa de seleção de seguimento */
         .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: #ddd;
-            margin-bottom: 15px;
-            cursor: pointer;
-            text-align: left;
+            display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #d1b3ff; margin-bottom: 12px; cursor: pointer;
         }
+        .checkbox-container input { accent-color: #ff2a8d; width: 16px; height: 16px; cursor: pointer; }
 
-        .btn { 
-            width: 100%;
-            background: linear-gradient(45deg, #ff3399, #c13584);
-            color: #fff;
-            border: none;
-            padding: 12px; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            cursor: pointer;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        .btn-admin {
-            background: linear-gradient(45deg, #833ab4, #405de6);
-        }
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 11px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
+        .btn-primary:hover { opacity: 0.9; }
+
+        .btn-secondary { width: 100%; background: transparent; border: 1px solid rgba(255, 42, 141, 0.4); color: #ff2a8d; padding: 11px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
+        .btn-secondary:hover { background: rgba(255, 42, 141, 0.1); }
+
+        .footer-note { font-size: 0.7rem; color: #666; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="card-container">
-        <h2>FlowScore</h2>
-        <p>Plataforma oficial de engajamento e fluxos.</p>
-        
-        <div id="form-area">
-            <div class="step-box">
-                <h4>Passo 1: Siga o Criador</h4>
-                <p style="margin-bottom: 10px;">É obrigatório seguir o perfil oficial para validar o acesso.</p>
-                <!-- Link direto para o teu Instagram -->
-                <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" class="btn" style="padding: 8px; font-size: 0.85rem; margin-bottom: 0;">Seguir @onlyz.licinhosz_bb</a>
-            </div>
+    <div class="welcome-card">
+        <div class="crown-icon">👑</div>
+        <h1>FlowScore</h1>
+        <p class="subtitle">O novo império das comunidades. O acesso é exclusivo para quem segue o criador no Instagram!</p>
 
-            <div class="step-box">
-                <h4>Passo 2: Entrar na Conta</h4>
-                <input type="email" id="userEmail" class="input-field" placeholder="Digite o seu e-mail">
-                
-                <label class="checkbox-container">
-                    <input type="checkbox" id="checkSeguiu"> Confirmo que já segui o perfil.
-                </label>
-            </div>
+        <!-- Link obrigatório para o perfil do Instagram -->
+        <a href="https://www.instagram.com/" target="_blank" class="insta-banner" onclick="marcouInstagram()">
+            📸 1º PASSO: Clica aqui e segue no Instagram (@teuperfil) para liberar o acesso!
+        </a>
 
-            <button class="btn" onclick="fazerLogin()">Entrar na Plataforma</button>
+        <!-- Secção de Entrar em Conta -->
+        <div class="auth-box">
+            <h3>🔑 Entrar em Conta</h3>
+            <input type="email" id="login-email" class="input-field" placeholder="O teu e-mail">
+            <input type="password" id="login-senha" class="input-field" placeholder="A sua senha">
+            
+            <label class="checkbox-container">
+                <input type="checkbox" id="check-insta-login"> Confirmo que já sigo o criador no Instagram.
+            </label>
+
+            <button class="btn-primary" onclick="entrarConta()">Entrar no Feed</button>
         </div>
 
-        <div id="logged-area" style="display: none;">
-            <p style="color: #ff3399; font-weight: bold; margin-bottom: 15px;" id="welcome-msg"></p>
+        <!-- Secção de Criar Conta -->
+        <div class="auth-box" style="margin-bottom: 0;">
+            <h3>✨ Criar Conta Nova</h3>
+            <input type="email" id="registo-email" class="input-field" placeholder="O teu melhor e-mail">
+            <input type="password" id="registo-senha" class="input-field" placeholder="Cria uma senha">
             
-            <!-- Botões normais -->
-            <a href="comum.html" class="btn">Acessar Fila Comum</a>
-            
-            <!-- Painel exclusivo de Fundador / Admin (só aparece se for o teu e-mail) -->
-            <div id="founder-panel" style="display: none; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                <p style="color: #833ab4; font-weight: bold; font-size: 0.8rem; margin-bottom: 8px;">👑 ACESSO DE FUNDADOR</p>
-                <a href="admin.html" class="btn btn-admin">Painel Administrativo</a>
-            </div>
+            <label class="checkbox-container">
+                <input type="checkbox" id="check-insta-registo"> Confirmo que já sigo o criador no Instagram.
+            </label>
 
-            <button class="btn btn-secondary" onclick="sairConta()" style="margin-top: 10px;">Sair da Conta</button>
+            <button class="btn-secondary" onclick="criarConta()">Registar e Entrar</button>
         </div>
+
+        <div class="footer-note">Plataforma Oficial FlowScore • Acesso protegido por verificação</div>
     </div>
 
     <script>
-        const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
+        const SENHA_CORRETA_FUNDADOR = "suasenha123";
 
-        function verificarLogin() {
-            const emailSalvo = localStorage.getItem('flowscore_email');
-            if (emailSalvo) {
-                document.getElementById('form-area').style.display = 'none';
-                document.getElementById('logged-area').style.display = 'block';
-                
-                let msg = `Conta: ${emailSalvo}`;
-                if (emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase()) {
-                    msg = `👑 Bem-vindo, Fundador Walyson!`;
-                    document.getElementById('founder-panel').style.display = 'block';
-                } else {
-                    document.getElementById('founder-panel').style.display = 'none';
-                }
-                document.getElementById('welcome-msg').innerText = msg;
-            }
+        function marcouInstagram() {
+            // Facilita marcando a caixinha automaticamente quando o utilizador clica no banner do Instagram
+            document.getElementById('check-insta-login').checked = true;
+            document.getElementById('check-insta-registo').checked = true;
         }
 
-        function fazerLogin() {
-            const email = document.getElementById('userEmail').value.trim();
-            const seguiu = document.getElementById('checkSeguiu').checked;
+        function entrarConta() {
+            let email = document.getElementById('login-email').value.trim().toLowerCase();
+            let senha = document.getElementById('login-senha').value;
+            let seguiu = document.getElementById('check-insta-login').checked;
 
-            if (email === '') {
-                alert('Por favor, digite o seu e-mail!');
+            if (!email || !senha) {
+                alert('Por favor, preenche o e-mail e a senha.');
                 return;
             }
 
-            if (email.toLowerCase() !== EMAIL_FUNDADOR.toLowerCase() && !seguiu) {
-                alert('Você precisa confirmar que seguiu o perfil do criador antes de continuar!');
+            // Exigência estricta do Instagram (exceto se for o fundador a entrar no próprio painel)
+            if (email !== 'walysonfelipenascimento@gmail.com' && !seguiu) {
+                alert('⚠️ ACESSO NEGADO! Tens de seguir o criador no Instagram para aceder ao FlowScore.');
+                return;
+            }
+
+            if (email === 'walysonfelipenascimento@gmail.com') {
+                if (senha !== SENHA_CORRETA_FUNDADOR) {
+                    alert('Senha incorreta para o e-mail do fundador!');
+                    return;
+                }
+                sessionStorage.setItem('flowscore_admin_logado', 'true');
+            }
+
+            localStorage.setItem('flowscore_email', email);
+            if (localStorage.getItem('flowscore_coins') === null) {
+                localStorage.setItem('flowscore_coins', '30');
+            }
+
+            alert('Acesso autorizado! Bem-vindo ao FlowScore.');
+            window.location.href = 'comum.html';
+        }
+
+        function criarConta() {
+            let email = document.getElementById('registo-email').value.trim().toLowerCase();
+            let senha = document.getElementById('registo-senha').value;
+            let seguiu = document.getElementById('check-insta-registo').checked;
+
+            if (!email || !senha) {
+                alert('Por favor, preenche um e-mail e cria uma senha válidos.');
+                return;
+            }
+
+            if (!seguiu) {
+                alert('⚠️ ACESSO NEGADO! Para criar conta no FlowScore, tens de nos seguir primeiro no Instagram.');
+                return;
+            }
+            
+            if (email === 'walysonfelipenascimento@gmail.com') {
+                alert('Este e-mail pertence ao Fundador. Utiliza a opção "Entrar em Conta".');
                 return;
             }
 
             localStorage.setItem('flowscore_email', email);
-            verificarLogin();
-        }
+            localStorage.setItem('flowscore_coins', '30'); // Bónus inicial
+            
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            if (!membros.some(m => m.email === email)) {
+                membros.push({ email: email, status: 'Membro Comum', vip: false });
+                localStorage.setItem('flowscore_membros', JSON.stringify(membros));
+            }
 
-        function sairConta() {
-            localStorage.removeItem('flowscore_email');
-            document.getElementById('form-area').style.display = 'block';
-            document.getElementById('logged-area').style.display = 'none';
-            document.getElementById('userEmail').value = '';
-            document.getElementById('checkSeguiu').checked = false;
+            alert('Conta criada com sucesso! 30 moedas adicionadas.');
+            window.location.href = 'comum.html';
         }
-
-        window.onload = verificarLogin;
     </script>
-
 </body>
 </html>
