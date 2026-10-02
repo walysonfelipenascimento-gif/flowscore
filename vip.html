@@ -6,154 +6,88 @@
     <title>FlowScore - Área VIP</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { 
-            background: #0f0c20; 
-            color: #fff; 
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
         .header-nav {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
+            width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
         }
-
         .header-nav a {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
+            color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s;
         }
-
-        .header-nav a.active {
-            border-color: #ff3399;
-            background: rgba(255, 51, 153, 0.15);
-            font-weight: bold;
-        }
+        .header-nav a.active { border-color: #f39c12; background: rgba(243, 156, 18, 0.15); font-weight: bold; }
 
         .card-container {
-            background: linear-gradient(135deg, #19152e 0%, #141126 100%);
-            border: 2px dashed #c13584;
-            border-radius: 20px;
-            padding: 30px 20px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
-            text-align: center;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(243, 156, 18, 0.15);
+            margin-bottom: 20px; text-align: center;
         }
+        h2 { font-size: 1.6rem; margin-bottom: 5px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
 
-        h2 { 
-            font-size: 2rem; 
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .insta-post-card {
+            background: #141126; border: 1px solid rgba(243, 156, 18, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: left;
         }
-
-        .pix-box { 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 15px; 
-            padding: 20px; 
-            margin-top: 20px; 
-            text-align: center; 
-        }
-
-        .pix-key { 
-            background: rgba(255, 255, 255, 0.08); 
-            padding: 12px; 
-            border-radius: 8px; 
-            color: #ff3399; 
-            margin: 15px 0; 
-            word-break: break-all; 
-            font-weight: bold;
-            font-size: 0.95rem;
-            border: 1px dashed rgba(255, 51, 153, 0.4);
-        }
-
-        .benefits-list {
-            text-align: left;
-            margin: 20px 0;
-            background: rgba(25, 21, 46, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        .benefits-list h3 {
-            font-size: 1rem;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-
-        .benefits-list ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        .benefits-list li {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .benefits-list li::before {
-            content: "✓";
-            color: #ff3399;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
+        .insta-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .insta-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #f39c12, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
+        .insta-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
+        .insta-user-sub { font-size: 0.7rem; color: #f39c12; }
+        .insta-embed-container { width: 100%; background: #000; min-height: 220px; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; }
+        .insta-body { padding: 12px; font-size: 0.8rem; color: #aaa; }
     </style>
 </head>
 <body>
 
     <div class="header-nav">
-        <a href="comum.html">Fila Comum</a>
-        <a href="vip.html" class="active">Área VIP</a>
-        <a href="exclusivo.html">Exclusivo Criador</a>
-        <a href="admin.html">Admin</a>
+        <a href="comum.html">Feed Fila</a>
+        <a href="vip.html" class="active">Área VIP ⭐</a>
+        <a href="exclusivo.html">Exclusivo 👑</a>
+        <a href="planos.html">Planos & Moedas 🪙</a>
     </div>
 
     <div class="card-container">
-        <h2>Área VIP - FlowScore</h2>
-        <p style="color: #bbb; font-size: 0.9rem;">Tenha prioridade máxima e vantagens exclusivas no sistema.</p>
-
-        <div class="pix-box">
-            <h3 style="color: #fff; font-size: 1.1rem;">Aprovação de Planos VIP</h3>
-            <p style="color:#aaa; margin-top: 5px; font-size: 0.85rem;">Efetue o pagamento para a chave Pix abaixo:</p>
-            
-            <div class="pix-key">walysonfelipenascimento@gmail.com</div>
-            
-            <p style="font-size: 0.8rem; color:#888;">Após o pagamento, envie o comprovante ou aguarde a verificação manual do administrador para liberação.</p>
-        </div>
+        <h2>Feed VIP Exclusivo</h2>
+        <p class="subtitle">Publicações de alto destaque e prioridade máxima na plataforma.</p>
     </div>
 
-    <div class="benefits-list">
-        <h3>✨ Vantagens do Plano VIP</h3>
-        <ul>
-            <li>Prioridade absoluta nas filas de atendimento e fluxos.</li>
-            <li>Acesso total ao conteúdo e ferramentas do criador.</li>
-            <li>Distintivo de membro apoiador destacado na plataforma.</li>
-            <li>Suporte direto com a administração.</li>
-        </ul>
+    <div style="max-width: 500px; width: 100%;" id="vip-timeline">
+        <!-- Posts VIP aparecem aqui -->
     </div>
 
+    <script>
+        window.onload = function() {
+            if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
+            
+            const timeline = document.getElementById('vip-timeline');
+            let posts = JSON.parse(localStorage.getItem('flowscore_insta_posts')) || [];
+            let vips = posts.filter(p => p.vip);
+
+            if (vips.length === 0) {
+                timeline.innerHTML = `<div class="card-container"><p style="color:#aaa;">Nenhuma publicação VIP no momento.</p></div>`;
+                return;
+            }
+
+            vips.forEach(p => {
+                timeline.innerHTML += `
+                    <div class="insta-post-card">
+                        <div class="insta-header">
+                            <div class="insta-avatar">⭐</div>
+                            <div>
+                                <div class="insta-user-info">${p.autor}</div>
+                                <div class="insta-user-sub">Membro VIP Destaque</div>
+                            </div>
+                        </div>
+                        <div class="insta-embed-container">
+                            <div>
+                                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 8px;">Post VIP do Instagram</p>
+                                <a href="${p.link}" target="_blank" style="color: #f39c12; font-size: 0.85rem; word-break: break-all;">${p.link}</a>
+                            </div>
+                        </div>
+                        <div class="insta-body">🚀 Impulsos ativos: ${p.impulsionado}</div>
+                    </div>`;
+            });
+        };
+    </script>
 </body>
 </html>
