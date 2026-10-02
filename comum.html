@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowScore - Fila Comum e Mural</title>
+    <title>FlowScore - Feed Estilo Instagram</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
@@ -19,21 +19,21 @@
 
         .header-nav {
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             display: flex;
             gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .header-nav a {
             color: #fff;
             background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 10px;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: 0.3s;
         }
@@ -48,15 +48,15 @@
             background: linear-gradient(135deg, #19152e 0%, #141126 100%);
             border: 1px solid rgba(193, 53, 132, 0.3);
             border-radius: 20px;
-            padding: 25px 20px;
-            max-width: 600px;
+            padding: 20px;
+            max-width: 500px;
             width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(193, 53, 132, 0.2);
             margin-bottom: 20px;
         }
 
         h2 { 
-            font-size: 1.8rem; 
+            font-size: 1.6rem; 
             margin-bottom: 5px;
             background: linear-gradient(45deg, #ff3399, #c13584, #833ab4);
             -webkit-background-clip: text;
@@ -64,12 +64,12 @@
             text-align: center;
         }
 
-        p.subtitle { text-align: center; color: #aaa; font-size: 0.85rem; margin-bottom: 15px; }
+        p.subtitle { text-align: center; color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
@@ -77,16 +77,16 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
         }
 
-        .stat-card h3 { font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
-        .stat-value { font-size: 1.3rem; font-weight: bold; color: #ff3399; }
+        .stat-card h3 { font-size: 0.75rem; color: #aaa; margin-bottom: 4px; }
+        .stat-value { font-size: 1.2rem; font-weight: bold; color: #ff3399; }
 
-        .form-group { margin-bottom: 12px; text-align: left; }
-        label { display: block; font-size: 0.85rem; color: #ddd; margin-bottom: 5px; }
-        input[type="text"], textarea {
+        .form-group { margin-bottom: 10px; text-align: left; }
+        label { display: block; font-size: 0.8rem; color: #ddd; margin-bottom: 4px; }
+        input[type="text"] {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
@@ -94,58 +94,85 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
-        textarea { resize: vertical; height: 70px; }
-        input:focus, textarea:focus { border-color: #ff3399; }
+        input:focus { border-color: #ff3399; }
 
         .btn-action { 
             width: 100%;
             background: linear-gradient(45deg, #ff3399, #c13584);
             color: #fff;
             border: none;
-            padding: 12px; 
-            border-radius: 10px; 
+            padding: 10px; 
+            border-radius: 8px; 
             font-weight: bold; 
             cursor: pointer;
-            font-size: 0.95rem;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            font-size: 0.9rem;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.3);
+            text-align: center;
         }
         .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
 
-        .post-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 12px;
-            text-align: left;
+        /* Estilo do Feed Estilo Instagram */
+        .insta-post-card {
+            background: #141126;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .post-item.vip-post {
+        .insta-post-card.vip-feed {
             border-color: #ff3399;
-            background: rgba(255, 51, 153, 0.05);
+            box-shadow: 0 0 15px rgba(255, 51, 153, 0.2);
         }
-        .post-desc { font-size: 0.9rem; color: #fff; margin-bottom: 8px; }
-        .post-link { font-size: 0.8rem; color: #ff3399; word-break: break-all; display: block; margin-bottom: 10px; }
-        
-        .post-footer {
+        .insta-header {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .insta-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .insta-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
+        .insta-user-sub { font-size: 0.7rem; color: #888; }
+
+        .insta-embed-container {
+            width: 100%;
+            background: #000;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .insta-body {
+            padding: 12px;
+        }
+        .insta-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
-            color: #888;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 8px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: #aaa;
         }
         .boost-btn {
             background: rgba(255, 51, 153, 0.2);
             border: 1px solid #ff3399;
             color: #fff;
-            padding: 4px 10px;
+            padding: 5px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.75rem;
@@ -157,16 +184,15 @@
 <body>
 
     <div class="header-nav">
-        <a href="comum.html" class="active">Fila Comum</a>
+        <a href="comum.html" class="active">Feed Fila</a>
         <a href="vip.html">Área VIP</a>
-        <a href="exclusivo.html">Exclusivo Criador</a>
+        <a href="exclusivo.html">Exclusivo</a>
         <a href="admin.html" id="nav-admin" style="display: none;">Admin</a>
     </div>
 
-    <!-- Painel de Perfil e Moedas -->
     <div class="card-container">
-        <h2>Fila Comum</h2>
-        <p class="subtitle" id="user-greeting">Gerencie as suas publicações e engajamento.</p>
+        <h2>Feed de Divulgação</h2>
+        <p class="subtitle" id="user-greeting">Cole o link do seu post do Instagram para receber críticas e engajamento.</p>
 
         <div class="stats-grid">
             <div class="stat-card">
@@ -175,50 +201,38 @@
             </div>
             <div class="stat-card">
                 <h3>Seu Status</h3>
-                <div class="stat-value" id="user-tier" style="font-size: 1.1rem; margin-top: 4px;">Comum</div>
+                <div class="stat-value" id="user-tier" style="font-size: 1rem; margin-top: 4px;">Comum</div>
             </div>
         </div>
     </div>
 
-    <!-- Criar Publicação / Adicionar Link -->
+    <!-- Enviar Link do Instagram -->
     <div class="card-container">
-        <h3 style="font-size: 1.1rem; color: #ff3399; margin-bottom: 12px;">➕ Adicionar Nova Publicação</h3>
+        <h3 style="font-size: 1rem; color: #ff3399; margin-bottom: 10px;">📸 Adicionar Post do Instagram</h3>
         
         <div class="form-group">
-            <label>Descrição do Conteúdo / Perfil</label>
-            <input type="text" id="postDesc" placeholder="Ex: Sigam meu perfil de edição!">
-        </div>
-        <div class="form-group">
-            <label>Link de Divulgação</label>
-            <input type="text" id="postLink" placeholder="https://instagram.com/seu_perfil">
+            <label>Link Direto da Publicação (Ex: https://www.instagram.com/p/...)</label>
+            <input type="text" id="instaLink" placeholder="Cole o link do post aqui">
         </div>
         
-        <button class="btn-action" onclick="criarPublicacao()">Publicar na Fila</button>
+        <button class="btn-action" onclick="adicionarPostInsta()">Publicar no Feed</button>
     </div>
 
-    <!-- Mural de Publicações -->
-    <div class="card-container">
-        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 10px;">🌐 Mural de Divulgação</h3>
-        <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 15px;">Interaja, acesse os links e turbine com moedas para subir de posição.</p>
-        
-        <div id="mural-posts">
-            <!-- As publicações aparecem aqui dinamicamente -->
-        </div>
+    <!-- Feed Estilo Rolagem (Timeline) -->
+    <div style="max-width: 500px; width: 100%;" id="feed-timeline">
+        <!-- Os posts em formato de feed aparecem aqui -->
     </div>
 
     <script>
         const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
 
-        // Carregar dados iniciais do localStorage ou criar padrão
         let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 15;
-        let publicacoes = JSON.parse(localStorage.getItem('flowscore_posts')) || [
-            { desc: "Perfil oficial da plataforma - Sigam!", link: "https://instagram.com/onlyz.licinhosz_bb", autor: "Fundador", vip: true, impulsionado: 5 },
-            { desc: "Conheça o meu canal de jogos e novidades!", link: "https://instagram.com", autor: "usuario@gmail.com", vip: false, impulsionado: 0 }
+        let postsInsta = JSON.parse(localStorage.getItem('flowscore_insta_posts')) || [
+            { link: "https://www.instagram.com/", autor: "Fundador", vip: true, impulsionado: 3 }
         ];
 
         window.onload = function() {
             const emailSalvo = localStorage.getItem('flowscore_email');
-            
             if (!emailSalvo) {
                 window.location.href = 'index.html';
                 return;
@@ -233,70 +247,82 @@
                 greeting.innerText = `Sessão: ${emailSalvo}`;
             }
 
-            atualizarInterface();
+            atualizarFeed();
         };
 
-        function atualizarInterface() {
+        function atualizarFeed() {
             document.getElementById('user-coins').innerText = `🪙 ${moedas}`;
             localStorage.setItem('flowscore_coins', moedas);
-            localStorage.setItem('flowscore_posts', JSON.stringify(publicacoes));
+            localStorage.setItem('flowscore_insta_posts', JSON.stringify(postsInsta));
 
-            const mural = document.getElementById('mural-posts');
-            mural.innerHTML = '';
+            const timeline = document.getElementById('feed-timeline');
+            timeline.innerHTML = '';
 
-            // Ordenar publicações por nível VIP e quantidade de impulsos
-            publicacoes.sort((a, b) => (b.vip - a.vip) || (b.impulsionado - a.impulsionado));
+            // Ordenar por VIP e impulsos
+            postsInsta.sort((a, b) => (b.vip - a.vip) || (b.impulsionado - a.impulsionado));
 
-            publicacoes.forEach((p, index) => {
+            postsInsta.forEach((p, index) => {
                 const div = document.createElement('div');
-                div.className = `post-item ${p.vip ? 'vip-post' : ''}`;
+                div.className = `insta-post-card ${p.vip ? 'vip-feed' : ''}`;
+                
+                // Formatar link limpo para exibição ou iframe caso seja válido
                 div.innerHTML = `
-                    <div class="post-desc">${p.vip ? '⭐ [VIP] ' : ''}${p.desc}</div>
-                    <a href="${p.link}" target="_blank" class="post-link">${p.link}</a>
-                    <div class="post-footer">
-                        <span>Por: ${p.autor} | 🚀 ${p.impulsionado} impulsos</span>
-                        <button class="boost-btn" onclick="turbinarPost(${index})">Turbinar (-5 🪙)</button>
+                    <div class="insta-header">
+                        <div class="insta-avatar">${p.autor.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <div class="insta-user-info">${p.autor} ${p.vip ? '⭐ [VIP]' : ''}</div>
+                            <div class="insta-user-sub">Post para avaliação e críticas</div>
+                        </div>
+                    </div>
+                    <div class="insta-embed-container">
+                        <div style="text-align: center; padding: 20px;">
+                            <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 10px;">Publicação vinculada do Instagram</p>
+                            <a href="${p.link}" target="_blank" style="color: #ff3399; font-size: 0.85rem; word-break: break-all;">${p.link}</a>
+                        </div>
+                    </div>
+                    <div class="insta-body">
+                        <div class="insta-actions">
+                            <span>🚀 ${p.impulsionado} impulsos</span>
+                            <button class="boost-btn" onclick="turbinarFeed(${index})">Turbinar (-5 🪙)</button>
+                        </div>
                     </div>
                 `;
-                mural.appendChild(div);
+                timeline.appendChild(div);
             });
         }
 
-        function criarPublicacao() {
-            const desc = document.getElementById('postDesc').value.trim();
-            const link = document.getElementById('postLink').value.trim();
+        function adicionarPostInsta() {
+            const link = document.getElementById('instaLink').value.trim();
             const emailSalvo = localStorage.getItem('flowscore_email');
 
-            if (!desc || !link) {
-                alert('Por favor, preencha a descrição e o link!');
+            if (!link || !link.includes('instagram.com')) {
+                alert('Por favor, insira um link válido do Instagram!');
                 return;
             }
 
             const isVip = emailSalvo.toLowerCase() === EMAIL_FUNDADOR.toLowerCase();
 
-            publicacoes.unshift({
-                desc: desc,
+            postsInsta.unshift({
                 link: link,
-                autor: emailSalvo,
+                autor: emailSalvo.split('@')[0],
                 vip: isVip,
                 impulsionado: 0
             });
 
-            document.getElementById('postDesc').value = '';
-            document.getElementById('postLink').value = '';
-            atualizarInterface();
-            alert('Publicação enviada para o mural com sucesso!');
+            document.getElementById('instaLink').value = '';
+            atualizarFeed();
+            alert('Post adicionado ao feed com sucesso para receber interações!');
         }
 
-        function turbinarPost(index) {
+        function turbinarFeed(index) {
             if (moedas < 5) {
-                alert('Você não tem moedas suficientes para turbinar! Interaja ou aguarde.');
+                alert('Você não tem moedas suficientes para turbinar este post!');
                 return;
             }
             moedas -= 5;
-            publicacoes[index].impulsionado += 1;
-            atualizarInterface();
-            alert('Publicação turbinada com sucesso! Subiu no ranking.');
+            postsInsta[index].impulsionado += 1;
+            atualizarFeed();
+            alert('Post turbinado com sucesso! Subiu no feed.');
         }
     </script>
 
