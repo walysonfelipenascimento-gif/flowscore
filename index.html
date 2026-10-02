@@ -50,9 +50,8 @@
     <div class="welcome-card">
         <div class="crown-icon">👑</div>
         <h1>FlowScore</h1>
-        <p class="subtitle">O novo império das comunidades. O acesso é exclusivo para quem segue o criador no Instagram!</p>
+        <p class="subtitle">O novo império das comunidades. O acesso é exclusivo para quem segue @onlyz.licinhos_zbb no Instagram!</p>
 
-        <!-- LINK CORRIGIDO PARA A TUA CONTA PESSOAL -->
         <a href="https://www.instagram.com/onlyz.licinhos_zbb" target="_blank" class="insta-banner" onclick="marcouInstagram()">
             📸 1º PASSO: Clica aqui e segue @onlyz.licinhos_zbb para liberar o acesso!
         </a>
@@ -102,13 +101,14 @@
                 return;
             }
 
+            // Bloqueia o e-mail de fundador no index.html e manda para o admin correto
             if (email === 'walysonfelipenascimento@gmail.com') {
-                alert('O e-mail do Fundador deve entrar pela Área Restrita (admin.html).');
+                alert('O e-mail do Fundador deve entrar obrigatoriamente pela Área Restrita (admin.html).');
                 return;
             }
 
             if (!seguiu) {
-                alert('⚠️ ACESSO NEGADO! Tens de seguir o criador no Instagram para aceder ao FlowScore.');
+                alert('⚠️ ACESSO NEGADO! Tens de seguir @onlyz.licinhos_zbb no Instagram para aceder ao FlowScore.');
                 return;
             }
 
@@ -127,7 +127,7 @@
             }
 
             if (email === 'walysonfelipenascimento@gmail.com') {
-                alert('Este e-mail pertence ao Fundador. Utiliza a área de Administrador.');
+                alert('Este e-mail pertence ao Fundador. Utiliza a Área Restrita (admin.html).');
                 return;
             }
 
