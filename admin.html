@@ -46,10 +46,10 @@
             <button class="btn-primary" onclick="entrarAdmin()">Entrar no Painel</button>
         </div>
 
-        <a href="index.html" class="back-link">← Voltar para a página de membros</a>
+        <a href="index.html" class="back-link">← Voltar para a página principal</a>
     </div>
 
-    <!-- PAINEL DE CONTROLO DO ADMIN (Oculto até fazer login) -->
+    <!-- PAINEL DE CONTROLO DO ADMIN -->
     <div class="admin-card" id="panel-container" style="display: none; text-align: left;">
         <div style="text-align: center; margin-bottom: 15px;">
             <div class="crown-icon">👑</div>
@@ -71,7 +71,6 @@
         const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
         const SENHA_FUNDADOR = "74199024";
 
-        // Verifica se já está logado como admin nesta sessão
         window.onload = function() {
             if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
                 mostrarPainel();
