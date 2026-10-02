@@ -25,13 +25,13 @@
         .coins-display { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 10px; }
         
         .plan-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 16px; padding: 16px; margin-bottom: 15px; text-align: left; }
-        .plan-box h3 { font-size: 1rem; color: #f39c12; margin-bottom: 6px; }
+        .plan-box h3 { font-size: 1.0rem; color: #f39c12; margin-bottom: 6px; }
         .plan-box p { font-size: 0.78rem; color: #ccc; margin-bottom: 12px; }
 
         .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
         .btn-action:hover { opacity: 0.9; }
 
-        /* Painel exclusivo do Admin - Totalmente isolado */
+        /* Painel exclusivo do Admin - Destacado em Roxo Imperial */
         .admin-panel { background: #1b1230; border: 2px dashed #9b59b6; border-radius: 20px; padding: 20px; max-width: 500px; width: 100%; margin-bottom: 20px; display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
         .admin-panel h3 { color: #e056fd; font-size: 1.1rem; margin-bottom: 8px; }
         .admin-panel p { font-size: 0.78rem; color: #d1b3ff; margin-bottom: 12px; }
@@ -46,10 +46,10 @@
         <a href="planos.html" class="active">Planos & Moedas 🪙</a>
     </div>
 
-    <!-- Painel de Controlo do Administrador (Fica oculto por predefinição e aparece isolado se for o admin) -->
+    <!-- Painel Master do Administrador (Oculto por predefinição, aparece só para o admin) -->
     <div class="admin-panel" id="admin-master-panel">
         <h3>👑 Painel Master do Administrador</h3>
-        <p>Logado como Fundador. Você possui privilégios totais de moderação e publicação em todas as páginas.</p>
+        <p>Logado como Fundador (Walyson). Privilégios totais de moderação ativos.</p>
         <button class="btn-action" onclick="resetarDadosGerais()" style="background: linear-gradient(45deg, #c0392b, #e74c3c);">Limpar / Resetar Todos os Posts</button>
     </div>
 
@@ -76,13 +76,16 @@
             // Carregar moedas atuais
             let moedas = localStorage.getItem('flowscore_coins');
             if (moedas === null) {
-                moedas = 20; // Bônus inicial
+                moedas = 30;
                 localStorage.setItem('flowscore_coins', moedas);
             }
             document.getElementById('user-coins').innerText = moedas;
 
-            // Verificação do Admin
-            if (email === 'onlyzlicinhoszbb@gmail.com') {
+            // Verificação correta do teu e-mail de Admin
+            let emailFormatado = email.trim().toLowerCase();
+            let adminEmail = 'walysonfelipenascimento@gmail.com';
+
+            if (emailFormatado === adminEmail) {
                 document.getElementById('admin-master-panel').style.display = 'block';
                 localStorage.setItem('flowscore_vip_ativo', 'true');
             }
@@ -98,7 +101,7 @@
 
         function ativarPlanoVip() {
             localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert('Plano VIP / Realeza ativado com sucesso! Agora já podes publicar nas abas VIP e Exclusiva.');
+            alert('Plano VIP / Realeza ativado com sucesso!');
         }
 
         function resetarDadosGerais() {
@@ -109,4 +112,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
