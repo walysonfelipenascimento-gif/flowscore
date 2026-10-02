@@ -52,51 +52,40 @@
         <h1>FlowScore</h1>
         <p class="subtitle">O novo império das comunidades. O acesso é exclusivo para quem segue o criador no Instagram!</p>
 
-        <a href="https://www.instagram.com/" target="_blank" class="insta-banner" onclick="marcouInstagram()">
-            📸 1º PASSO: Clica aqui e segue no Instagram (@teuperfil) para liberar o acesso!
+        <a href="https://www.instagram.com/flow.scores" target="_blank" class="insta-banner" onclick="marcouInstagram()">
+            📸 1º PASSO: Clica aqui e segue @flow.scores para liberar o acesso!
         </a>
 
-        <!-- Secção de Entrar em Conta -->
+        <!-- Entrar em Conta (Membros) -->
         <div class="auth-box">
-            <h3>🔑 Entrar em Conta</h3>
+            <h3>🔑 Entrar na Conta</h3>
             <input type="email" id="login-email" class="input-field" placeholder="O teu e-mail">
             <input type="password" id="login-senha" class="input-field" placeholder="A sua senha">
             
             <label class="checkbox-container">
-                <input type="checkbox" id="check-insta-login"> Confirmo que já sigo o criador no Instagram.
+                <input type="checkbox" id="check-insta-login"> Confirmo que já sigo no Instagram.
             </label>
 
-            <button class="btn-primary" onclick="entrarConta()">Entrar no Feed</button>
+            <button class="btn-primary" onclick="entrarConta()">Entrar</button>
         </div>
 
-        <!-- Secção de Criar Conta -->
+        <!-- Criar Conta Nova -->
         <div class="auth-box" style="margin-bottom: 0;">
             <h3>✨ Criar Conta Nova</h3>
             <input type="email" id="registo-email" class="input-field" placeholder="O teu melhor e-mail">
             <input type="password" id="registo-senha" class="input-field" placeholder="Cria uma senha">
             
             <label class="checkbox-container">
-                <input type="checkbox" id="check-insta-registo"> Confirmo que já sigo o criador no Instagram.
+                <input type="checkbox" id="check-insta-registo"> Confirmo que já sigo no Instagram.
             </label>
 
             <button class="btn-secondary" onclick="criarConta()">Registar e Entrar</button>
         </div>
 
-        <div class="footer-note">Plataforma Oficial FlowScore • Acesso protegido</div>
+        <div class="footer-note">Plataforma Oficial FlowScore</div>
     </div>
 
     <script>
-        // SENHA EXATA DO FUNDADOR
-        const SENHA_CORRETA_FUNDADOR = "74199024";
-
-        window.onload = function() {
-            // Se já tiver uma sessão ativa guardada, entra direto sem pedir senha novamente
-            let emailSalvo = localStorage.getItem('flowscore_email');
-            if (emailSalvo) {
-                window.location.href = 'comum.html';
-            }
-        };
-
         function marcouInstagram() {
             document.getElementById('check-insta-login').checked = true;
             document.getElementById('check-insta-registo').checked = true;
@@ -112,24 +101,17 @@
                 return;
             }
 
-            if (email !== 'walysonfelipenascimento@gmail.com' && !seguiu) {
+            if (email === 'walysonfelipenascimento@gmail.com') {
+                alert('O e-mail do Fundador deve entrar pela Área Restrita (admin.html).');
+                return;
+            }
+
+            if (!seguiu) {
                 alert('⚠️ ACESSO NEGADO! Tens de seguir o criador no Instagram para aceder ao FlowScore.');
                 return;
             }
 
-            if (email === 'walysonfelipenascimento@gmail.com') {
-                if (senha !== SENHA_CORRETA_FUNDADOR) {
-                    alert('Senha incorreta para o e-mail do fundador!');
-                    return;
-                }
-                sessionStorage.setItem('flowscore_admin_logado', 'true');
-            }
-
             localStorage.setItem('flowscore_email', email);
-            if (localStorage.getItem('flowscore_coins') === null) {
-                localStorage.setItem('flowscore_coins', '30');
-            }
-
             window.location.href = 'comum.html';
         }
 
@@ -143,19 +125,21 @@
                 return;
             }
 
+            if (email === 'walysonfelipenascimento@gmail.com') {
+                alert('Este e-mail pertence ao Fundador. Utiliza a área de Administrador.');
+                return;
+            }
+
             if (!seguiu) {
                 alert('⚠️️ ACESSO NEGADO! Para criar conta no FlowScore, tens de nos seguir primeiro no Instagram.');
                 return;
             }
-            
-            if (email === 'walysonfelipenascimento@gmail.com') {
-                alert('Este e-mail pertence ao Fundador. Utiliza a opção "Entrar em Conta".');
-                return;
-            }
 
             localStorage.setItem('flowscore_email', email);
-            localStorage.setItem('flowscore_coins', '30');
-            
+            if (localStorage.getItem('flowscore_coins') === null) {
+                localStorage.setItem('flowscore_coins', '30');
+            }
+
             let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
             if (!membros.some(m => m.email === email)) {
                 membros.push({ email: email, status: 'Membro Comum', vip: false });
