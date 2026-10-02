@@ -22,7 +22,7 @@
         h2 { font-size: 1.6rem; margin-bottom: 5px; background: linear-gradient(45deg, #e056fd, #9b59b6, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { color: #d1b3ff; font-size: 0.8rem; margin-bottom: 15px; }
 
-        .post-card { background: #110c1f; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left; }
+        .post-card { background: #110c1f; border: 1px solid rgba(155, 89, 182, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: left; max-width: 500px; width: 100%; }
         .post-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(155, 89, 182, 0.05); }
         .post-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(45deg, #9b59b6, #f1c40f); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
         .post-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
@@ -45,7 +45,7 @@
         <p class="subtitle">Conteúdos solenes e publicações oficiais em estilo de realeza.</p>
     </div>
 
-    <div style="max-width: 500px; width: 100%;" id="royal-timeline"></div>
+    <div style="max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center;" id="royal-timeline"></div>
 
     <script>
         window.onload = function() {
@@ -56,19 +56,7 @@
             let royalPosts = posts.filter(p => p.section === 'exclusivo');
 
             if (royalPosts.length === 0) {
-                // Conteúdo padrão inicial imperial caso não haja posts criados ainda
-                timeline.innerHTML = `
-                    <div class="post-card">
-                        <div class="post-header">
-                            <div class="post-avatar">👑</div>
-                            <div>
-                                <div class="post-user-info">Fundador Walyson</div>
-                                <div class="post-user-sub">Pronunciamento Imperial</div>
-                            </div>
-                        </div>
-                        <div class="post-content">Bem-vindos ao núcleo de comando supremo. Conteúdo exclusivo da liderança e publicações de alto padrão.</div>
-                        <a href="https://www.instagram.com/onlyz.licinhosz_bb" target="_blank" class="post-link">✨ Aceder ao Post Oficial do Instagram</a>
-                    </div>`;
+                timeline.innerHTML = `<div class="card-container"><p style="color:#d1b3ff;">Nenhuma publicação exclusiva no momento.</p></div>`;
                 return;
             }
 
