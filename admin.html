@@ -39,7 +39,7 @@
 </head>
 <body>
 
-    <!-- ECRÃ DE ENTRADA DO ADMIN (Pede apenas o e-mail, sem senha) -->
+    <!-- ECRÃ DE IDENTIFICAÇÃO DO ADMIN (Apenas E-mail, sem senha) -->
     <div class="admin-card" id="login-container">
         <div class="crown-icon">👑</div>
         <h1>Área Restrita</h1>
@@ -54,7 +54,7 @@
         <a href="index.html" class="back-link">← Voltar para a página principal</a>
     </div>
 
-    <!-- PAINEL DE CONTROLO COMPLETO DO ADMIN -->
+    <!-- PAINEL DE CONTROLO DE DONO -->
     <div class="admin-card" id="panel-container" style="display: none; text-align: left;">
         <div style="text-align: center; margin-bottom: 15px;">
             <div class="crown-icon">👑</div>
@@ -76,7 +76,7 @@
         <div class="auth-box">
             <h3 style="color: #ff2a8d; margin-bottom: 10px;">⚙️ Controles e Gestão</h3>
             <button class="btn-primary" onclick="verMembros()">👥 Ver Lista de Membros</button>
-            <button class="btn-primary" onclick="darAdminExtra()" style="background: #7b1fa2;">🛡️ Gerir Cargos e Permissões</button>
+            <button class="btn-primary" onclick="gerirCargos()" style="background: #7b1fa2;">🛡️ Gerir Cargos e Permissões</button>
             <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c;">🗑️ Reiniciar Dados do Sistema</button>
             <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão</button>
         </div>
@@ -87,6 +87,7 @@
     <script>
         const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
 
+        // Verifica se já estava logado nesta sessão de admin
         window.onload = function() {
             if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
                 ativarPainelAdmin();
@@ -101,7 +102,7 @@
                 localStorage.setItem('flowscore_email', EMAIL_FUNDADOR);
                 ativarPainelAdmin();
             } else {
-                alert('⚠️ Acesso Negado! Este e-mail não pertence ao Fundador.');
+                alert('⚠️ Acesso Negado! Este e-mail não pertence ao Fundador do FlowScore.');
             }
         }
 
@@ -109,6 +110,7 @@
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('panel-container').style.display = 'block';
             
+            // Carrega dados dinâmicos do LocalStorage
             let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
             document.getElementById('total-membros').innerText = membros.length;
         }
@@ -116,15 +118,15 @@
         function verMembros() {
             let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
             if (membros.length === 0) {
-                alert('Ainda não existem membros registados.');
+                alert('Ainda não existem membros registados no sistema.');
                 return;
             }
-            let lista = membros.map(m => `- ${m.email} (${m.status})`).join('\n');
-            alert('Membros registados:\n\n' + lista);
+            let lista = membros.map(m => `• ${m.email} — [${m.status}]`).join('\n');
+            alert('👥 Membros Registados:\n\n' + lista);
         }
 
-        function darAdminExtra() {
-            alert('Área de gestão de cargos e permissões avançadas do FlowScore.');
+        function gerirCargos() {
+            alert('⚙️ Secção de gestão de cargos, permissões e atribuições do FlowScore.');
         }
 
         function sairAdmin() {
@@ -134,9 +136,9 @@
         }
 
         function limparDadosSistema() {
-            if (confirm('Tens a certeza absoluta que queres apagar todos os dados do sistema?')) {
+            if (confirm('⚠️ Tens a certeza absoluta que queres limpar todos os dados armazenados do sistema?')) {
                 localStorage.clear();
-                alert('Sistema reiniciado com sucesso!');
+                alert('🧹 Sistema reiniciado com sucesso!');
                 window.location.reload();
             }
         }
