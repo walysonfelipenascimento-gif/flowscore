@@ -8,12 +8,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .header-nav {
-            width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
-        }
-        .header-nav a {
-            color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s;
-        }
+        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
         .header-nav a.active { border-color: #f39c12; background: rgba(243, 156, 18, 0.15); font-weight: bold; }
 
         .card-container {
@@ -26,15 +22,13 @@
         h2 { font-size: 1.6rem; margin-bottom: 5px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
 
-        .insta-post-card {
-            background: #141126; border: 1px solid rgba(243, 156, 18, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: left;
-        }
-        .insta-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .insta-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #f39c12, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
-        .insta-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
-        .insta-user-sub { font-size: 0.7rem; color: #f39c12; }
-        .insta-embed-container { width: 100%; background: #000; min-height: 220px; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; }
-        .insta-body { padding: 12px; font-size: 0.8rem; color: #aaa; }
+        .post-card { background: #141126; border: 1px solid rgba(243, 156, 18, 0.4); border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: left; }
+        .post-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .post-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #f39c12, #d35400); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
+        .post-user-info { font-size: 0.8rem; color: #fff; font-weight: bold; }
+        .post-user-sub { font-size: 0.7rem; color: #f39c12; }
+        .post-content { padding: 15px; font-size: 0.85rem; color: #ddd; line-height: 1.4; word-break: break-word; }
+        .post-link { display: block; padding: 12px; background: rgba(0,0,0,0.3); color: #f39c12; text-decoration: none; font-size: 0.8rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -48,43 +42,37 @@
 
     <div class="card-container">
         <h2>Feed VIP Exclusivo</h2>
-        <p class="subtitle">Publicações de alto destaque e prioridade máxima na plataforma.</p>
+        <p class="subtitle">Conteúdos e comunicados oficiais de alta prioridade.</p>
     </div>
 
-    <div style="max-width: 500px; width: 100%;" id="vip-timeline">
-        <!-- Posts VIP aparecem aqui -->
-    </div>
+    <div style="max-width: 500px; width: 100%;" id="vip-timeline"></div>
 
     <script>
         window.onload = function() {
             if (!localStorage.getItem('flowscore_email')) { window.location.href = 'index.html'; return; }
             
             const timeline = document.getElementById('vip-timeline');
-            let posts = JSON.parse(localStorage.getItem('flowscore_insta_posts')) || [];
-            let vips = posts.filter(p => p.vip);
+            let posts = JSON.parse(localStorage.getItem('flowscore_all_posts')) || [];
+            let vipPosts = posts.filter(p => p.section === 'vip');
 
-            if (vips.length === 0) {
+            if (vipPosts.length === 0) {
                 timeline.innerHTML = `<div class="card-container"><p style="color:#aaa;">Nenhuma publicação VIP no momento.</p></div>`;
                 return;
             }
 
-            vips.forEach(p => {
+            timeline.innerHTML = '';
+            vipPosts.forEach(p => {
                 timeline.innerHTML += `
-                    <div class="insta-post-card">
-                        <div class="insta-header">
-                            <div class="insta-avatar">⭐</div>
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">⭐</div>
                             <div>
-                                <div class="insta-user-info">${p.autor}</div>
-                                <div class="insta-user-sub">Membro VIP Destaque</div>
+                                <div class="post-user-info">${p.autor || 'Membro VIP'}</div>
+                                <div class="post-user-sub">Destaque Oficial</div>
                             </div>
                         </div>
-                        <div class="insta-embed-container">
-                            <div>
-                                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 8px;">Post VIP do Instagram</p>
-                                <a href="${p.link}" target="_blank" style="color: #f39c12; font-size: 0.85rem; word-break: break-all;">${p.link}</a>
-                            </div>
-                        </div>
-                        <div class="insta-body">🚀 Impulsos ativos: ${p.impulsionado}</div>
+                        <div class="post-content">${p.texto}</div>
+                        ${p.link ? `<a href="${p.link}" target="_blank" class="post-link">🔗 Aceder ao Link / Mídia da Publicação</a>` : ''}
                     </div>`;
             });
         };
