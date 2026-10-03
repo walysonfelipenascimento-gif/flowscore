@@ -6,92 +6,105 @@
     <title>FlowScore - Planos & Moedas</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0f0c20; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        body { background: #090614; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .header-nav { width: 100%; max-width: 500px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .header-nav a { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .header-nav a.active { border-color: #f39c12; background: rgba(243, 156, 18, 0.15); font-weight: bold; }
+        .header-nav {
+            display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.03); padding: 10px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); width: 100%; max-width: 500px;
+        }
+        .header-nav a {
+            color: #fff; text-decoration: none; font-size: 0.8rem; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s;
+        }
+        .header-nav a:hover, .header-nav a.active { background: rgba(255, 42, 141, 0.2); border-color: #ff2a8d; }
 
         .card-container {
-            background: linear-gradient(135deg, #1f1a3a 0%, #141126 100%);
-            border: 1px solid rgba(243, 156, 18, 0.4);
-            border-radius: 20px; padding: 20px; max-width: 500px; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(243, 156, 18, 0.15);
-            margin-bottom: 20px; text-align: center;
+            background: linear-gradient(135deg, #16102a 0%, #0d0a1a 100%);
+            border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 16px; padding: 25px; max-width: 500px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; margin-bottom: 20px;
         }
-        h2 { font-size: 1.5rem; margin-bottom: 8px; background: linear-gradient(45deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p.subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 15px; }
+        h2 { color: #ff2a8d; margin-bottom: 8px; font-size: 1.5rem; }
+        p.subtitle { color: #aaa; font-size: 0.85rem; margin-bottom: 15px; }
 
-        .coins-display { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 10px; }
+        .coins-display { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 15px; }
         
-        .plan-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 16px; padding: 16px; margin-bottom: 15px; text-align: left; }
-        .plan-box h3 { font-size: 1.0rem; color: #f39c12; margin-bottom: 6px; }
+        .plan-box {
+            background: #110d21; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 14px; padding: 16px; text-align: left; margin-bottom: 15px;
+        }
+        .plan-box h3 { font-size: 1rem; color: #ff2a8d; margin-bottom: 6px; }
         .plan-box p { font-size: 0.78rem; color: #ccc; margin-bottom: 12px; }
 
-        .btn-action { width: 100%; background: linear-gradient(45deg, #f39c12, #d35400); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-action {
+            display: block; width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 11px; border-radius: 10px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.2s; text-align: center; font-size: 0.85rem;
+        }
         .btn-action:hover { opacity: 0.9; }
 
-        /* Grelha de Check-in de 30 Dias */
-        .grid-checkin { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 15px; }
-        .day-box { background: #141126; border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 8px; padding: 8px 4px; text-align: center; font-size: 0.7rem; color: #aaa; }
-        .day-box.completed { background: rgba(39, 174, 96, 0.2); border-color: #27ae60; color: #2ecc71; }
-        .day-box.active-day { border-color: #f39c12; background: rgba(243, 156, 18, 0.2); color: #f1c40f; font-weight: bold; }
-
-        .qr-box { background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin: 10px 0; }
-        .qr-box img { width: 130px; height: 130px; display: block; }
+        .grid-checkin {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px;
+        }
+        .day-box {
+            background: #110d21; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 4px; text-align: center; font-size: 0.7rem; color: #aaa;
+        }
+        .day-box.completed { border-color: #ff2a8d; color: #ff2a8d; background: rgba(255, 42, 141, 0.1); font-weight: bold; }
+        
+        .qr-box { background: #fff; padding: 12px; border-radius: 10px; display: inline-block; margin: 10px 0; }
+        .qr-box img { width: 120px; height: 120px; display: block; }
     </style>
 </head>
 <body>
 
+    <!-- Navegação Oficial -->
     <div class="header-nav">
-        <a href="comum.html">Feed Fila</a>
-        <a href="vip.html">Área VIP ⭐</a>
-        <a href="exclusivo.html">Exclusivo 👑</a>
-        <a href="planos.html" class="active">Planos 🪙</a>
-        <a href="admin.html" id="nav-admin-link" style="display:none; border-color:#9b59b6; color:#e056fd;">Painel Admin ⚙️</a>
+        <a href="index.html">Início 🏠</a>
+        <a href="comum.html">Feed 📁</a>
+        <a href="vip.html">VIP 👑</a>
+        <a href="exclusivo.html">Exclusivo ✨</a>
+        <a href="planos.html" class="active" style="border-color: #ff2a8d; color: #ff2a8d;">Planos 🪙</a>
     </div>
 
+    <!-- Painel de Moedas & Check-in -->
     <div class="card-container">
-        <h2>Painel de Planos & Moedas</h2>
-        <p class="subtitle">Gerencie seu saldo e resgate recompensas diárias.</p>
-        <div class="coins-display">🪙 Suas Moedas: <span id="user-coins">0</span></div>
-        <button class="btn-action" onclick="fazerCheckinDiario()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Fazer Check-in de Hoje</button>
-
+        <h2>Painel de Moedas & Check-in</h2>
+        <p class="subtitle">Resgata a tua recompensa diária (1 vez a cada 24h)</p>
+        
+        <div class="coins-display">🪙 As tuas Moedas: <span id="user-coins">0</span></div>
+        <button class="btn-action" onclick="fazerCheckinDiario()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">📅 Fazer Check-in de Hoje</button>
+        
         <div class="grid-checkin" id="checkin-grid"></div>
     </div>
 
+    <!-- Assinatura VIP -->
     <div class="card-container">
-        <div class="plan-box">
+        <div class="plan-box" style="margin-bottom: 0;">
             <h3>⭐ Assinatura VIP / Realeza (PIX)</h3>
-            <p>Escaneie o QR Code abaixo para pagar via PIX ou clique no botão para ativação automática de teste.</p>
+            <p>Escaneia o QR Code abaixo para pagar via PIX ou clica no botão para ativação automática de teste.</p>
+            
             <div style="text-align: center;">
                 <div class="qr-box">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=FlowScorePixSimuladoVIP" alt="QR Code PIX">
                 </div>
             </div>
-            <button class="btn-action" onclick="ativarPlanoVip()">Ativar VIP Automaticamente</button>
+
+            <button class="btn-action" onclick="ativarPlanoVip()" style="margin-top: 10px;">✨ Ativar VIP Automaticamente</button>
         </div>
     </div>
 
     <script>
         window.onload = function() {
             let email = localStorage.getItem('flowscore_email');
-            if (!email) { email = 'walysonfelipenascimento@gmail.com'; localStorage.setItem('flowscore_email', email); }
+            if (!email) {
+                alert('Por favor, faz login primeiro no Início.');
+                window.location.href = 'index.html';
+                return;
+            }
 
             let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 30;
             localStorage.setItem('flowscore_coins', moedas);
             document.getElementById('user-coins').innerText = moedas;
 
-            if (email.trim().toLowerCase() === 'walysonfelipenascimento@gmail.com') {
-                document.getElementById('nav-admin-link').style.display = 'inline-block';
-            }
-
             renderizarCheckinGrid();
         };
 
         function obterRecompensaDia(dia) {
-            // Progressivo até o dia 30 dar exatamente 350 moedas
-            if (dia === 30) return 350;
             return Math.min(10 + (dia * 3), 300);
         }
 
@@ -104,20 +117,29 @@
                 let recompensa = obterRecompensaDia(i);
                 let classe = '';
                 if (i <= streak) classe = 'completed';
-                if (i === streak + 1) classe = 'active-day';
 
                 grid.innerHTML += `
                     <div class="day-box ${classe}">
                         <div>D${i}</div>
-                        <div style="font-size:0.6rem; color:#f1c40f;">+${recompensa}</div>
-                    </div>`;
+                        <div style="font-size: 0.6rem; color: #f1c40f; margin-top: 2px;">+${recompensa}</div>
+                    </div>
+                `;
             }
         }
 
         function fazerCheckinDiario() {
+            let ultimoCheckin = localStorage.getItem('flowscore_ultimo_checkin');
+            let hoje = new Date().toDateString();
+
+            // Verificação estrita de 24 horas (bloqueia se já tiver feito hoje)
+            if (ultimoCheckin === hoje) {
+                alert('⏳ Calma aí! Já fizeste o check-in hoje. Volta amanhã para resgatar mais moedas.');
+                return;
+            }
+
             let streak = parseInt(localStorage.getItem('flowscore_streak')) || 0;
             if (streak >= 30) {
-                alert('Parabéns! Já completaste o ciclo de 30 dias. O ciclo será reiniciado.');
+                alert('🎉 Parabéns! Já completaste o ciclo de 30 dias. O ciclo será reiniciado.');
                 streak = 0;
             }
 
@@ -126,17 +148,29 @@
             let moedas = parseInt(localStorage.getItem('flowscore_coins')) || 0;
             moedas += ganho;
 
+            // Guardar dados atualizados e registar a data de hoje
             localStorage.setItem('flowscore_streak', streak);
             localStorage.setItem('flowscore_coins', moedas);
+            localStorage.setItem('flowscore_ultimo_checkin', hoje);
 
             document.getElementById('user-coins').innerText = moedas;
             renderizarCheckinGrid();
-            alert(`Check-in do Dia ${streak} realizado com sucesso! Ganhaste ${ganho} moedas 🪙.`);
+
+            alert(`✅ Check-in do Dia ${streak} realizado com sucesso! Ganhaste ${ganho} moedas 🪙.`);
         }
 
         function ativarPlanoVip() {
             localStorage.setItem('flowscore_vip_ativo', 'true');
-            alert('Pagamento detetado! Plano VIP / Realeza ativado com sucesso.');
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            let emailAtual = localStorage.getItem('flowscore_email');
+            
+            membros.forEach(m => {
+                if (m.email === emailAtual) m.vip = true;
+            });
+            localStorage.setItem('flowscore_membros', JSON.stringify(membros));
+
+            alert('✨ Pagamento detetado! Plano VIP / Realeza ativado com sucesso.');
+            window.location.href = 'vip.html';
         }
     </script>
 </body>
