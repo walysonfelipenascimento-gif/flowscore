@@ -11,7 +11,7 @@
         .admin-card {
             background: linear-gradient(135deg, #1c102b 0%, #0d0a1a 100%);
             border: 1px solid rgba(255, 42, 141, 0.5);
-            border-radius: 24px; padding: 30px 25px; max-width: 450px; width: 100%;
+            border-radius: 24px; padding: 30px 25px; max-width: 480px; width: 100%;
             box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 30px rgba(255, 42, 141, 0.2);
             text-align: center;
         }
@@ -25,7 +25,7 @@
         
         .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 11px 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
         
-        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; margin-bottom: 8px; }
+        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 11px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: 0.3s; margin-bottom: 8px; }
         .btn-primary:hover { opacity: 0.9; transform: scale(1.01); }
 
         .back-link { display: block; margin-top: 15px; font-size: 0.78rem; color: #888; text-decoration: none; transition: 0.2s; }
@@ -39,7 +39,7 @@
 </head>
 <body>
 
-    <!-- ECRÃ DE IDENTIFICAÇÃO DO ADMIN (Apenas E-mail, sem senha) -->
+    <!-- Identificação do Fundador -->
     <div class="admin-card" id="login-container">
         <div class="crown-icon">👑</div>
         <h1>Área Restrita</h1>
@@ -54,12 +54,12 @@
         <a href="index.html" class="back-link">← Voltar para a página principal</a>
     </div>
 
-    <!-- PAINEL DE CONTROLO DE DONO -->
+    <!-- Painel de Controlo Completo -->
     <div class="admin-card" id="panel-container" style="display: none; text-align: left;">
         <div style="text-align: center; margin-bottom: 15px;">
             <div class="crown-icon">👑</div>
             <h1>Painel do Fundador</h1>
-            <p class="subtitle">Controlo total e gestão do FlowScore</p>
+            <p class="subtitle">Gestão Total e Análise do FlowScore</p>
         </div>
 
         <div class="stats-grid">
@@ -74,9 +74,10 @@
         </div>
 
         <div class="auth-box">
-            <h3 style="color: #ff2a8d; margin-bottom: 10px;">⚙️ Controles e Gestão</h3>
-            <button class="btn-primary" onclick="verMembros()">👥 Ver Lista de Membros</button>
-            <button class="btn-primary" onclick="gerirCargos()" style="background: #7b1fa2;">🛡️ Gerir Cargos e Permissões</button>
+            <h3 style="color: #ff2a8d; margin-bottom: 10px;">⚙️ Ferramentas de Controlo</h3>
+            <button class="btn-primary" onclick="verMembros()">👥 Análise Completa de Membros</button>
+            <button class="btn-primary" onclick="analisePlanos()" style="background: #7b1fa2;">📊 Análise de Planos e Cargos</button>
+            <button class="btn-primary" onclick="verBio()" style="background: #0288d1;">📝 Ver / Editar Bio do Fundador</button>
             <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c;">🗑️ Reiniciar Dados do Sistema</button>
             <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão</button>
         </div>
@@ -87,9 +88,8 @@
     <script>
         const EMAIL_FUNDADOR = "walysonfelipenascimento@gmail.com";
 
-        // Verifica se já estava logado nesta sessão de admin
         window.onload = function() {
-            if (sessionStorage.getItem('flowscore_admin_logado') === 'true') {
+            if (sessionStorage.getItem('flowscore_admin_logado') === 'true' || localStorage.getItem('flowscore_email') === EMAIL_FUNDADOR) {
                 ativarPainelAdmin();
             }
         };
@@ -110,7 +110,6 @@
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('panel-container').style.display = 'block';
             
-            // Carrega dados dinâmicos do LocalStorage
             let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
             document.getElementById('total-membros').innerText = membros.length;
         }
@@ -121,18 +120,32 @@
                 alert('Ainda não existem membros registados no sistema.');
                 return;
             }
-            let lista = membros.map(m => `• ${m.email} — [${m.status}]`).join('\n');
-            alert('👥 Membros Registados:\n\n' + lista);
+            let lista = membros.map(m => `• ${m.email} — [${m.status || 'Membro Comum'}]`).join('\n');
+            alert('👥 ANÁLISE DE MEMBROS:\n\n' + lista);
         }
 
-        function gerirCargos() {
-            alert('⚙️ Secção de gestão de cargos, permissões e atribuições do FlowScore.');
+        function analisePlanos() {
+            let membros = JSON.parse(localStorage.getItem('flowscore_membros')) || [];
+            let comuns = membros.filter(m => !m.vip && m.status !== 'Fundador').length;
+            let vips = membros.filter(m => m.vip).length;
+            
+            alert(`📊 ANÁLISE DE PLANOS:\n\n• Membros Comuns: ${comuns}\n• Membros VIP / Especiais: ${vips}\n• Total Geral: ${membros.length}`);
+        }
+
+        function verBio() {
+            let bioAtual = localStorage.getItem('flowscore_bio') || 'Fundador e Criador Oficial do FlowScore - O império das comunidades.';
+            let novaBio = prompt('📝 Bio atual do Fundador:\n\n' + bioAtual + '\n\nQueres atualizar a tua bio? Escreve a nova abaixo:');
+            
+            if (novaBio !== null && novaBio.trim() !== '') {
+                localStorage.setItem('flowscore_bio', novaBio.trim());
+                alert('✅ Bio atualizada com sucesso!');
+            }
         }
 
         function sairAdmin() {
             sessionStorage.removeItem('flowscore_admin_logado');
             localStorage.removeItem('flowscore_email');
-            window.location.reload();
+            window.location.href = 'index.html';
         }
 
         function limparDadosSistema() {
