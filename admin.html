@@ -25,7 +25,7 @@
         
         .input-field { width: 100%; background: #090614; border: 1px solid rgba(255, 42, 141, 0.3); border-radius: 10px; padding: 11px 12px; color: #fff; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
         
-        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 11px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: 0.3s; margin-bottom: 8px; }
+        .btn-primary { width: 100%; background: linear-gradient(45deg, #ff2a8d, #d81b60); color: #fff; border: none; padding: 11px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: 0.3s; margin-bottom: 8px; text-decoration: none; display: block; text-align: center; }
         .btn-primary:hover { opacity: 0.9; transform: scale(1.01); }
 
         .back-link { display: block; margin-top: 15px; font-size: 0.78rem; color: #888; text-decoration: none; transition: 0.2s; }
@@ -35,6 +35,8 @@
         .stat-box { background: #090614; border: 1px solid rgba(255, 42, 141, 0.2); border-radius: 10px; padding: 10px; }
         .stat-box span { font-size: 0.75rem; color: #aaa; display: block; }
         .stat-box strong { font-size: 1.1rem; color: #ff2a8d; }
+
+        .pages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -78,7 +80,16 @@
             <button class="btn-primary" onclick="verMembros()">👥 Análise Completa de Membros</button>
             <button class="btn-primary" onclick="analisePlanos()" style="background: #7b1fa2;">📊 Análise de Planos e Cargos</button>
             <button class="btn-primary" onclick="verBio()" style="background: #0288d1;">📝 Ver / Editar Bio do Fundador</button>
-            <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c;">🗑️ Reiniciar Dados do Sistema</button>
+            
+            <!-- Acesso rápido às outras páginas do repositório -->
+            <div class="pages-grid">
+                <a href="planos.html" class="btn-primary" style="background: #37474f; margin-bottom:0;">Planos</a>
+                <a href="vip.html" class="btn-primary" style="background: #37474f; margin-bottom:0;">VIP</a>
+                <a href="comum.html" class="btn-primary" style="background: #37474f; margin-bottom:0;">Comum</a>
+                <a href="exclusivo.html" class="btn-primary" style="background: #37474f; margin-bottom:0;">Exclusivo</a>
+            </div>
+
+            <button class="btn-primary" onclick="limparDadosSistema()" style="background: #b71c1c; margin-top: 10px;">🗑️ Reiniciar Dados do Sistema</button>
             <button class="btn-primary" onclick="sairAdmin()" style="background: #333;">🚪 Terminar Sessão</button>
         </div>
 
